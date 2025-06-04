@@ -10,11 +10,11 @@ import './styles/theme.css';
 // Import components
 import ServiceAuth from './ServiceAuth';
 import ServiceProviderDashboard from './components/service-provider/Dashboard';
-import AdminDashboard from './components/admin/Dashboard';
+import AdminApp from './AdminApp';
 import CustomerDashboard from './components/customer/Dashboard';
 import ServiceProviderProfile from './components/service-provider/Profile';
-import UserManagement from './components/admin/UserManagement';
-import ContentManagement from './components/admin/ContentManagement';
+import UserManagement from './components/admin/Dashboard/UserManagement';
+import ContentManagement from './components/admin/Dashboard/ContentManagement';
 import LandingPage from './LandingPage';
 
 // Protected Route component
@@ -142,23 +142,15 @@ function AppRoutes() {
         path="/admin-dashboard"
         element={
           <ProtectedRoute allowedRoles={['admin']}>
-            <AdminDashboard />
+            <AdminApp />
           </ProtectedRoute>
         }
       />
       <Route
-        path="/admin/users"
+        path="/admin/*"
         element={
           <ProtectedRoute allowedRoles={['admin']}>
-            <UserManagement />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/content"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <ContentManagement />
+            <AdminApp />
           </ProtectedRoute>
         }
       />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { MdDirectionsCar, MdPerson, MdDateRange, MdAttachMoney } from 'react-icons/md';
+import { MdDirectionsCar, MdPerson, MdDateRange, MdAttachMoney, MdAdd, MdLocalShipping } from 'react-icons/md';
 import { BiBookContent } from 'react-icons/bi';
+import { FaCarAlt } from 'react-icons/fa';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -13,25 +14,34 @@ const TransportDashboard = () => {
       title: 'Total Vehicles',
       value: '12',
       icon: <MdDirectionsCar className="w-8 h-8" />,
-      color: 'from-blue-500 to-blue-600'
     },
     {
       title: 'Active Bookings',
       value: '6',
       icon: <BiBookContent className="w-8 h-8" />,
-      color: 'from-green-500 to-green-600'
     },
     {
-      title: 'Total Passengers',
-      value: '28',
-      icon: <MdPerson className="w-8 h-8" />,
-      color: 'from-purple-500 to-purple-600'
-    },
-    {
-      title: 'Revenue',
+      title: 'Total Revenue',
       value: '₹55,000',
       icon: <MdAttachMoney className="w-8 h-8" />,
-      color: 'from-yellow-500 to-yellow-600'
+    }
+  ];
+
+  const quickActions = [
+    {
+      title: 'Add New Vehicle',
+      icon: <MdAdd className="w-6 h-6" />,
+      onClick: () => {}
+    },
+    {
+      title: 'Manage Bookings',
+      icon: <BiBookContent className="w-6 h-6" />,
+      onClick: () => {}
+    },
+    {
+      title: 'Vehicle Status',
+      icon: <FaCarAlt className="w-6 h-6" />,
+      onClick: () => {}
     }
   ];
 
@@ -95,20 +105,38 @@ const TransportDashboard = () => {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
+      {/* Quick Actions */}
+      <div className="quick-actions">
+        {quickActions.map((action, index) => (
+          <motion.button
+            key={action.title}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="action-card custom-transition"
+            onClick={action.onClick}
+          >
+            <div className="flex items-center gap-3">
+              {action.icon}
+              <span>{action.title}</span>
+            </div>
+          </motion.button>
+        ))}
+      </div>
+
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="stats-grid">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`p-6 rounded-lg bg-gradient-to-r ${stat.color} text-white shadow-lg`}
+            className="stat-card custom-transition"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium opacity-80">{stat.title}</p>
-                <p className="text-3xl font-bold mt-1">{stat.value}</p>
+                <p className="stat-label">{stat.title}</p>
+                <p className="stat-value">{stat.value}</p>
               </div>
               {stat.icon}
             </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { MdPerson, MdDateRange, MdAttachMoney, MdLocationOn } from 'react-icons/md';
+import { MdPerson, MdDateRange, MdAttachMoney, MdLocationOn, MdAdd } from 'react-icons/md';
 import { BiBookContent } from 'react-icons/bi';
+import { FaRoute, FaMapMarkedAlt } from 'react-icons/fa';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -13,25 +14,34 @@ const TravelGuideDashboard = () => {
       title: 'Total Tours',
       value: '15',
       icon: <MdLocationOn className="w-8 h-8" />,
-      color: 'from-blue-500 to-blue-600'
     },
     {
       title: 'Active Bookings',
       value: '8',
       icon: <BiBookContent className="w-8 h-8" />,
-      color: 'from-green-500 to-green-600'
     },
     {
-      title: 'Total Tourists',
-      value: '45',
-      icon: <MdPerson className="w-8 h-8" />,
-      color: 'from-purple-500 to-purple-600'
-    },
-    {
-      title: 'Revenue',
+      title: 'Total Revenue',
       value: '₹35,000',
       icon: <MdAttachMoney className="w-8 h-8" />,
-      color: 'from-yellow-500 to-yellow-600'
+    }
+  ];
+
+  const quickActions = [
+    {
+      title: 'Add New Tour',
+      icon: <MdAdd className="w-6 h-6" />,
+      onClick: () => {}
+    },
+    {
+      title: 'Manage Bookings',
+      icon: <BiBookContent className="w-6 h-6" />,
+      onClick: () => {}
+    },
+    {
+      title: 'Update Routes',
+      icon: <FaMapMarkedAlt className="w-6 h-6" />,
+      onClick: () => {}
     }
   ];
 
@@ -95,20 +105,38 @@ const TravelGuideDashboard = () => {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
+      {/* Quick Actions */}
+      <div className="quick-actions">
+        {quickActions.map((action, index) => (
+          <motion.button
+            key={action.title}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="action-card custom-transition"
+            onClick={action.onClick}
+          >
+            <div className="flex items-center gap-3">
+              {action.icon}
+              <span>{action.title}</span>
+            </div>
+          </motion.button>
+        ))}
+      </div>
+
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="stats-grid">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`p-6 rounded-lg bg-gradient-to-r ${stat.color} text-white shadow-lg`}
+            className="stat-card custom-transition"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium opacity-80">{stat.title}</p>
-                <p className="text-3xl font-bold mt-1">{stat.value}</p>
+                <p className="stat-label">{stat.title}</p>
+                <p className="stat-value">{stat.value}</p>
               </div>
               {stat.icon}
             </div>
@@ -146,65 +174,36 @@ const TravelGuideDashboard = () => {
             transition={{ duration: 0.2 }}
           >
             {activeTab === 'overview' && (
-              <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-                  Recent Bookings
-                </h3>
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">Recent Bookings</h3>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead className="bg-gray-50 dark:bg-gray-700">
+                  <table className="bookings-table">
+                    <thead>
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                          Tourist
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                          Tour Type
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                          Date
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                          Duration
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                          Status
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                          Amount
-                        </th>
+                        <th>Tourist</th>
+                        <th>Tour Type</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                        <th>Amount</th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <tbody>
                       {recentBookings.map((booking) => (
                         <motion.tr
                           key={booking.id}
                           whileHover={{ scale: 1.01 }}
-                          className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                            {booking.touristName}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                            {booking.tourType}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                            {booking.date}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                            {booking.duration}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              booking.status === 'Confirmed'
-                                ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
-                                : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100'
-                            }`}>
+                          <td>{booking.touristName}</td>
+                          <td>{booking.tourType}</td>
+                          <td>{booking.date}</td>
+                          <td>{booking.duration}</td>
+                          <td>
+                            <span className={`status-badge custom-transition ${booking.status.toLowerCase()}`}>
                               {booking.status}
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                            {booking.amount}
-                          </td>
+                          <td>{booking.amount}</td>
                         </motion.tr>
                       ))}
                     </tbody>

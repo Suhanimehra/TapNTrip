@@ -7,7 +7,7 @@ import AddService from './AddService';
 
 const ServiceProviderDashboard = () => {
   const [selectedProvider, setSelectedProvider] = useState('Hotel Provider');
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('overview');
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -32,7 +32,7 @@ const ServiceProviderDashboard = () => {
 
   const handleProviderChange = (provider) => {
     setSelectedProvider(provider);
-    setActiveTab('dashboard'); // Reset to dashboard when provider changes
+    setActiveTab('overview'); // Reset to overview when provider changes
   };
 
   return (

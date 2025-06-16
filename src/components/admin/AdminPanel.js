@@ -62,9 +62,9 @@ const AdminPanel = () => {
   return (
     <div className="min-h-screen bg-[#1a1e2e] text-white">
       {/* Left Sidebar Navigation */}
-      <nav className="fixed left-0 top-0 h-screen w-64 bg-[#1f2937] p-4 overflow-y-auto" aria-label="Main navigation">
+      <nav className="fixed left-0 top-0 h-screen w-64 bg-[#1f2937] p-4 overflow-y-auto transition-all duration-300 hover:shadow-xl" aria-label="Main navigation">
         {/* Logo */}
-        <div className="mb-8">
+        <div className="mb-8 transform transition-transform duration-300 hover:scale-105">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
             TapNTrip
           </h1>
@@ -77,14 +77,14 @@ const AdminPanel = () => {
             <li key={item.id}>
               <button
                 onClick={() => setActiveSection(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 ${
                   activeSection === item.id
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-700'
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                 }`}
                 aria-current={activeSection === item.id ? 'page' : undefined}
               >
-                <span className="text-xl" role="img" aria-hidden="true">
+                <span className="text-xl transform transition-transform duration-300 hover:rotate-12" role="img" aria-hidden="true">
                   {item.icon}
                 </span>
                 <span>{item.label}</span>
@@ -95,10 +95,10 @@ const AdminPanel = () => {
       </nav>
 
       {/* Main Content Area */}
-      <main className="ml-64 p-8" role="main">
+      <main className="ml-64 p-8 transition-all duration-300" role="main">
         {/* Header */}
         <header className="flex justify-between items-center mb-8">
-          <div>
+          <div className="transform transition-transform duration-300 hover:scale-105">
             <h1 className="text-2xl font-bold" id="page-title">
               {navigationItems.find(item => item.id === activeSection)?.label}
             </h1>
@@ -106,7 +106,7 @@ const AdminPanel = () => {
           </div>
           <button
             onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition-colors"
+            className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
             aria-label="Logout from your account"
           >
             Logout
@@ -119,28 +119,28 @@ const AdminPanel = () => {
           <section className="grid grid-cols-1 md:grid-cols-4 gap-6" aria-labelledby="stats-heading">
             <h2 id="stats-heading" className="sr-only">Dashboard Statistics</h2>
             
-            <div className="bg-[#1f2937] rounded-lg p-6" role="status">
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
               <h3 className="text-gray-400 mb-2">Total Users</h3>
               <p className="text-3xl font-bold text-blue-500" aria-label={`Total users: ${statistics.totalUsers}`}>
                 {statistics.totalUsers.toLocaleString()}
               </p>
             </div>
             
-            <div className="bg-[#1f2937] rounded-lg p-6" role="status">
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
               <h3 className="text-gray-400 mb-2">Active Providers</h3>
               <p className="text-3xl font-bold text-green-500" aria-label={`Active providers: ${statistics.activeProviders}`}>
                 {statistics.activeProviders.toLocaleString()}
               </p>
             </div>
             
-            <div className="bg-[#1f2937] rounded-lg p-6" role="status">
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
               <h3 className="text-gray-400 mb-2">Pending Approvals</h3>
               <p className="text-3xl font-bold text-yellow-500" aria-label={`Pending approvals: ${statistics.pendingApprovals}`}>
                 {statistics.pendingApprovals.toLocaleString()}
               </p>
             </div>
 
-            <div className="bg-[#1f2937] rounded-lg p-6" role="status">
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
               <h3 className="text-gray-400 mb-2">Total Bookings</h3>
               <p className="text-3xl font-bold text-purple-500" aria-label={`Total bookings: ${statistics.totalBookings}`}>
                 {statistics.totalBookings.toLocaleString()}
@@ -149,7 +149,7 @@ const AdminPanel = () => {
           </section>
 
           {/* Recent Activities */}
-          <section className="bg-[#1f2937] rounded-lg p-6" aria-labelledby="activities-heading">
+          <section className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:shadow-lg" aria-labelledby="activities-heading">
             <h2 id="activities-heading" className="text-xl font-semibold mb-6">Recent Activities</h2>
             <div className="overflow-x-auto">
               <table className="w-full" role="table">
@@ -164,25 +164,19 @@ const AdminPanel = () => {
                 </thead>
                 <tbody>
                   {recentActivities.map((activity) => (
-                    <tr key={activity.id} className="border-b border-gray-700">
+                    <tr key={activity.id} className="border-b border-gray-700 hover:bg-gray-800 transition-colors duration-200">
                       <td className="py-4 px-4">{activity.name}</td>
-                      <td className="py-4 px-4">
-                        {activity.type.split('_').map(word => 
-                          word.charAt(0).toUpperCase() + word.slice(1)
-                        ).join(' ')}
-                      </td>
+                      <td className="py-4 px-4">{activity.type}</td>
                       <td className="py-4 px-4">{activity.date}</td>
                       <td className="py-4 px-4">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs ${getStatusStyle(activity.status)}`}
-                        >
+                        <span className={`px-3 py-1 rounded-full text-sm ${getStatusStyle(activity.status)}`}>
                           {activity.status}
                         </span>
                       </td>
                       <td className="py-4 px-4">
                         <button
-                          className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                          aria-label={`View details of ${activity.name}`}
+                          className="text-blue-400 hover:text-blue-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                          aria-label={`View details for ${activity.name}`}
                         >
                           View Details
                         </button>
@@ -199,11 +193,11 @@ const AdminPanel = () => {
             <h2 id="quick-actions-heading" className="sr-only">Quick Actions</h2>
             
             <button
-              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-colors text-left"
+              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               aria-label="Review pending provider applications"
             >
               <div className="flex items-center space-x-4">
-                <span className="text-2xl" role="img" aria-hidden="true">📋</span>
+                <span className="text-2xl transform transition-transform duration-300 hover:rotate-12" role="img" aria-hidden="true">📋</span>
                 <div>
                   <h3 className="font-semibold">Review Applications</h3>
                   <p className="text-sm text-gray-400">Review pending provider applications</p>
@@ -212,11 +206,11 @@ const AdminPanel = () => {
             </button>
 
             <button
-              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-colors text-left"
+              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               aria-label="Generate monthly reports"
             >
               <div className="flex items-center space-x-4">
-                <span className="text-2xl" role="img" aria-hidden="true">📊</span>
+                <span className="text-2xl transform transition-transform duration-300 hover:rotate-12" role="img" aria-hidden="true">📊</span>
                 <div>
                   <h3 className="font-semibold">Generate Reports</h3>
                   <p className="text-sm text-gray-400">Create monthly activity reports</p>
@@ -225,11 +219,11 @@ const AdminPanel = () => {
             </button>
 
             <button
-              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-colors text-left"
+              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               aria-label="View system notifications"
             >
               <div className="flex items-center space-x-4">
-                <span className="text-2xl" role="img" aria-hidden="true">🔔</span>
+                <span className="text-2xl transform transition-transform duration-300 hover:rotate-12" role="img" aria-hidden="true">🔔</span>
                 <div>
                   <h3 className="font-semibold">Notifications</h3>
                   <p className="text-sm text-gray-400">View system notifications</p>

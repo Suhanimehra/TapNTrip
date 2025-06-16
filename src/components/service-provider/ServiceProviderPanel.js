@@ -2,11 +2,30 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
+import { auth } from '../../firebase-config';
+import { signOut } from 'firebase/auth';
+import './Dashboard/Dashboard.css';
+import HotelDashboard from './Dashboard/HotelDashboard';
+import TransportDashboard from './Dashboard/TransportDashboard';
+import TravelGuideDashboard from './Dashboard/TravelGuideDashboard';
+import AddService from './Dashboard/AddService';
+import HotelProfile from './Profile/HotelProfile';
+import TransportProfile from './Profile/TransportProfile';
+import GuideProfile from './Profile/GuideProfile';
+import Settings from './Settings/Settings';
+import Reviews from './Dashboard/Reviews';
+import HotelBookings from './Bookings/HotelBookings';
+import TransportBookings from './Bookings/TransportBookings';
+import GuideBookings from './Bookings/GuideBookings';
+import HotelServices from './Services/HotelServices';
+import TransportServices from './Services/TransportServices';
+import GuideServices from './Services/GuideServices';
 
 const ServiceProviderPanel = () => {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme, zoomLevel, increaseZoom, decreaseZoom, resetZoom } = useTheme();
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [providerType, setProviderType] = useState('hotel');
   const [earnings] = useState({
     total: 25000,
     pending: 5000,
@@ -42,8 +61,14 @@ const ServiceProviderPanel = () => {
     { id: 'settings', label: 'Settings', icon: '⚙️' },
   ];
 
-  const handleLogout = () => {
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      // Optionally, display an error message to the user
+    }
   };
 
   // Animation variants
@@ -92,6 +117,76 @@ const ServiceProviderPanel = () => {
     zoom: `${zoomLevel}%`,
   };
 
+  // Render the correct dashboard/content component based on activeSection and providerType
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'dashboard':
+        switch (providerType) {
+          case 'hotel':
+            return <HotelDashboard />;
+          case 'transport':
+            return <TransportDashboard />;
+          case 'guide':
+            return <TravelGuideDashboard />;
+          default:
+            return <HotelDashboard />;
+        }
+      case 'bookings':
+        return (
+          <div className="flex flex-col items-center justify-center h-full p-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Bookings Section</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-300 text-center">
+              This section is currently blank and can be implemented here.
+            </p>
+          </div>
+        );
+      case 'services':
+        switch (providerType) {
+          case 'hotel':
+            return <HotelServices />;
+          case 'transport':
+            return <TransportServices />;
+          case 'guide':
+            return <GuideServices />;
+          default:
+            return <HotelServices />;
+        }
+      case 'profile':
+        switch (providerType) {
+          case 'hotel':
+            return <HotelProfile />;
+          case 'transport':
+            return <TransportProfile />;
+          case 'guide':
+            return <GuideProfile />;
+          default:
+            return <HotelProfile />;
+        }
+      case 'earnings':
+        return (
+          <div className="flex flex-col items-center justify-center h-full p-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Earnings Section</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-300 text-center">
+              This section is currently blank and can be implemented here.
+            </p>
+          </div>
+        );
+      case 'reviews':
+        return (
+          <div className="flex flex-col items-center justify-center h-full p-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Reviews Section</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-300 text-center">
+              This section is currently blank and can be implemented here.
+            </p>
+          </div>
+        );
+      case 'settings':
+        return <Settings providerType={providerType} />;
+      default:
+        return <HotelDashboard />;
+    }
+  };
+
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-[#1a1e2e]' : 'bg-white'} text-${isDarkMode ? 'white' : 'gray-800'}`}>
       {/* Header */}
@@ -123,8 +218,9 @@ const ServiceProviderPanel = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={decreaseZoom}
-                  className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-colors duration-200`}
+                  className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   title="Zoom Out"
+                  aria-label="Decrease zoom level"
                 >
                   <span className="text-xl">−</span>
                 </motion.button>
@@ -133,8 +229,9 @@ const ServiceProviderPanel = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={increaseZoom}
-                  className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-colors duration-200`}
+                  className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   title="Zoom In"
+                  aria-label="Increase zoom level"
                 >
                   <span className="text-xl">+</span>
                 </motion.button>
@@ -142,8 +239,9 @@ const ServiceProviderPanel = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={resetZoom}
-                  className={`text-sm px-2 py-1 rounded ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-colors duration-200`}
+                  className={`text-sm px-2 py-1 rounded ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   title="Reset Zoom"
+                  aria-label="Reset zoom level to default"
                 >
                   Reset
                 </motion.button>
@@ -154,8 +252,9 @@ const ServiceProviderPanel = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={toggleTheme}
-                className={`p-2 rounded-lg ${isDarkMode ? 'bg-[#1a1e2e] hover:bg-[#2d3348]' : 'bg-blue-50 hover:bg-blue-100'} transition-all duration-200`}
+                className={`p-2 rounded-lg ${isDarkMode ? 'bg-[#1a1e2e] hover:bg-[#2d3348]' : 'bg-blue-50 hover:bg-blue-100'} transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                 title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {isDarkMode ? '🌞' : '🌙'}
               </motion.button>
@@ -165,7 +264,7 @@ const ServiceProviderPanel = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleLogout}
-                className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+                className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                 aria-label="Logout from your account"
               >
                 Logout
@@ -185,7 +284,7 @@ const ServiceProviderPanel = () => {
             isDarkMode 
               ? 'bg-[#1f2937] border-r border-[#2d3348]' 
               : 'bg-white/70 hover:bg-white border-r border-white/20'
-          } p-4 overflow-y-auto`} 
+          } p-4 overflow-y-auto transition-all duration-300 hover:shadow-xl`} 
           aria-label="Main navigation"
         >
           <ul className="space-y-2">
@@ -194,15 +293,15 @@ const ServiceProviderPanel = () => {
                 <motion.button
                   onClick={() => setActiveSection(item.id)}
                   whileHover="hover"
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                     activeSection === item.id
                       ? isDarkMode 
-                        ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white'
-                        : 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white'
+                        ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-lg'
+                        : 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg'
                       : isDarkMode
-                        ? 'text-gray-300 hover:bg-[#2d3348]'
+                        ? 'text-gray-300 hover:bg-[#2d3348] hover:text-white'
                         : 'text-gray-600 hover:bg-gray-100'
-                  }`}
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   aria-current={activeSection === item.id ? 'page' : undefined}
                 >
                   <motion.span 
@@ -221,7 +320,7 @@ const ServiceProviderPanel = () => {
         </motion.nav>
 
         {/* Main Content Area */}
-        <main className="ml-64 flex-1 p-8" role="main">
+        <main className="ml-64 flex-1 p-8 transition-all duration-300" role="main">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSection}
@@ -231,12 +330,12 @@ const ServiceProviderPanel = () => {
               variants={containerVariants}
               className="space-y-6"
             >
-              {/* Header */}
+              {/* Header with Provider Type Selector */}
               <motion.header 
                 variants={cardVariants}
                 className="flex justify-between items-center mb-8"
               >
-                <div>
+                <div className="transform transition-transform duration-300 hover:scale-105">
                   <h1 className="text-2xl font-bold" id="page-title">
                     {navigationItems.find(item => item.id === activeSection)?.label}
                   </h1>
@@ -244,147 +343,28 @@ const ServiceProviderPanel = () => {
                     Welcome back, Service Provider
                   </p>
                 </div>
+                
+                {/* Provider Type Selector */}
+                <div className="flex items-center space-x-4">
+                  <select
+                    value={providerType}
+                    onChange={(e) => setProviderType(e.target.value)}
+                    className={`px-4 py-2 rounded-lg border ${
+                      isDarkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white' 
+                        : 'bg-white border-gray-300 text-gray-900'
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
+                    aria-label="Select provider type"
+                  >
+                    <option value="hotel">Hotel Provider</option>
+                    <option value="transport">Transport Provider</option>
+                    <option value="guide">Tour Guide</option>
+                  </select>
+                </div>
               </motion.header>
 
-              {/* Dashboard Content */}
-              <div className="space-y-6">
-                {/* Quick Stats */}
-                <motion.section 
-                  variants={containerVariants}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-6" 
-                  aria-labelledby="stats-heading"
-                >
-                  <h2 id="stats-heading" className="sr-only">Dashboard Statistics</h2>
-                  
-                  <motion.div 
-                    variants={cardVariants}
-                    whileHover="hover"
-                    className={`${
-                      isDarkMode 
-                        ? 'bg-[#1f2937] border-[#2d3348]' 
-                        : 'bg-white border-gray-200'
-                    } rounded-lg p-6 border`} 
-                    role="status"
-                  >
-                    <h3 className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-                      Total Earnings
-                    </h3>
-                    <p className="text-3xl font-bold text-blue-500" aria-label={`Total earnings: ₹${earnings.total}`}>
-                      ₹{earnings.total.toLocaleString()}
-                    </p>
-                  </motion.div>
-                  
-                  <motion.div 
-                    variants={cardVariants}
-                    whileHover="hover"
-                    className={`${
-                      isDarkMode 
-                        ? 'bg-[#1f2937] border-[#2d3348]' 
-                        : 'bg-white border-gray-200'
-                    } rounded-lg p-6 border`} 
-                    role="status"
-                  >
-                    <h3 className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-                      Pending Payments
-                    </h3>
-                    <p className="text-3xl font-bold text-orange-500" aria-label={`Pending payments: ₹${earnings.pending}`}>
-                      ₹{earnings.pending.toLocaleString()}
-                    </p>
-                  </motion.div>
-                  
-                  <motion.div 
-                    variants={cardVariants}
-                    whileHover="hover"
-                    className={`${
-                      isDarkMode 
-                        ? 'bg-[#1f2937] border-[#2d3348]' 
-                        : 'bg-white border-gray-200'
-                    } rounded-lg p-6 border`} 
-                    role="status"
-                  >
-                    <h3 className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-                      Last Month
-                    </h3>
-                    <p className="text-3xl font-bold text-green-500" aria-label={`Last month earnings: ₹${earnings.lastMonth}`}>
-                      ₹{earnings.lastMonth.toLocaleString()}
-                    </p>
-                  </motion.div>
-                </motion.section>
-
-                {/* Recent Bookings */}
-                <motion.section 
-                  variants={cardVariants}
-                  className={`${
-                    isDarkMode 
-                      ? 'bg-[#1f2937] border-[#2d3348]' 
-                      : 'bg-white border-gray-200'
-                  } rounded-lg p-6 border`} 
-                  aria-labelledby="bookings-heading"
-                >
-                  <h2 id="bookings-heading" className="text-xl font-semibold mb-6">Recent Bookings</h2>
-                  <div className="overflow-x-auto">
-                    <table className="w-full" role="table">
-                      <thead>
-                        <tr className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-                          <th scope="col" className="text-left py-3 px-4">Customer</th>
-                          <th scope="col" className="text-left py-3 px-4">Service</th>
-                          <th scope="col" className="text-left py-3 px-4">Date</th>
-                          <th scope="col" className="text-left py-3 px-4">Amount</th>
-                          <th scope="col" className="text-left py-3 px-4">Status</th>
-                          <th scope="col" className="text-left py-3 px-4">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {recentBookings.map((booking) => (
-                          <motion.tr 
-                            key={booking.id} 
-                            variants={itemVariants}
-                            className={`border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
-                          >
-                            <td className="py-4 px-4">{booking.customerName}</td>
-                            <td className="py-4 px-4">{booking.service}</td>
-                            <td className="py-4 px-4">{booking.date}</td>
-                            <td className="py-4 px-4">₹{booking.amount.toLocaleString()}</td>
-                            <td className="py-4 px-4">
-                              <span
-                                className={`px-3 py-1 rounded-full text-xs ${
-                                  booking.status === 'pending'
-                                    ? 'bg-yellow-900/30 text-yellow-300'
-                                    : 'bg-green-900/30 text-green-300'
-                                }`}
-                              >
-                                {booking.status}
-                              </span>
-                            </td>
-                            <td className="py-4 px-4">
-                              {booking.status === 'pending' && (
-                                <div className="flex gap-2">
-                                  <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
-                                    aria-label={`Accept booking from ${booking.customerName}`}
-                                  >
-                                    Accept
-                                  </motion.button>
-                                  <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                                    aria-label={`Reject booking from ${booking.customerName}`}
-                                  >
-                                    Reject
-                                  </motion.button>
-                                </div>
-                              )}
-                            </td>
-                          </motion.tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </motion.section>
-              </div>
+              {/* Render the correct dashboard/content component */}
+              {renderContent()}
             </motion.div>
           </AnimatePresence>
         </main>
@@ -399,7 +379,7 @@ const ServiceProviderPanel = () => {
           isDarkMode 
             ? 'bg-[#1f2937] border border-[#2d3348] text-white' 
             : 'bg-white text-gray-800 hover:bg-gray-50'
-        } transition-all duration-200`}
+        } transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
         aria-label="Scroll to top"
       >
         ⬆️

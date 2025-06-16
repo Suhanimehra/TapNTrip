@@ -1,3 +1,5 @@
+// src/App.js
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -7,10 +9,10 @@ import './styles/theme.css';
 
 // Import components
 import ServiceAuth from './ServiceAuth';
-import ServiceProviderPanel from './components/service-provider/ServiceProviderPanel';
+import ServiceProviderDashboard from './components/service-provider/Dashboard';
 import AdminApp from './AdminApp';
 import CustomerDashboard from './components/customer/Dashboard';
-import Profile from './components/service-provider/Dashboard/Profile';
+import ServiceProviderProfile from './components/service-provider/Profile';
 import UserManagement from './components/admin/Dashboard/UserManagement';
 import ContentManagement from './components/admin/Dashboard/ContentManagement';
 import LandingPage from './LandingPage';
@@ -122,7 +124,7 @@ function AppRoutes() {
         path="/service-dashboard"
         element={
           <ProtectedRoute allowedRoles={['service_provider']}>
-            <ServiceProviderPanel />
+            <ServiceProviderDashboard />
           </ProtectedRoute>
         }
       />
@@ -130,7 +132,7 @@ function AppRoutes() {
         path="/service-profile"
         element={
           <ProtectedRoute allowedRoles={['service_provider']}>
-            <Profile />
+            <ServiceProviderProfile />
           </ProtectedRoute>
         }
       />
@@ -175,4 +177,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

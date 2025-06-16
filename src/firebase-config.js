@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { getAnalytics } from "firebase/analytics";
 
 // TODO: Replace with your Firebase configuration
 // You can find these values in your Firebase Console:
@@ -12,18 +13,19 @@ import { getFirestore } from 'firebase/firestore';
 // 5. Scroll down to "Your apps" section
 // 6. Under the "</>" icon, you'll find these configuration values
 const firebaseConfig = {
-  apiKey: "AIzaSyCAzucMgq7PQMiAE-WyKcEOFreegxwhYgw",
-  authDomain: "tapntrip-73346.firebaseapp.com",
-  projectId: "tapntrip-73346",
-  storageBucket: "tapntrip-73346.firebasestorage.app",
-  messagingSenderId: "776667099064",
-  appId: "1:776667099064:web:73d32f408d2342033d294d",
-  measurementId: "G-R4XW268M39"
+  apiKey: "AIzaSyCvWs7LyadmMf2d9ikHPo8i2ZEu03aq_VY",
+  authDomain: "tap-86240.firebaseapp.com",
+  projectId: "tap-86240",
+  storageBucket: "tap-86240.firebasestorage.app",
+  messagingSenderId: "650203684911",
+  appId: "1:650203684911:web:48a2bc446cdd4cbb15a6da",
+  measurementId: "G-EN6T9ED69N"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { auth, db }; 
+export { auth, db, analytics }; 

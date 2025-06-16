@@ -10,166 +10,66 @@ import {
   MdPublish,
   MdUnpublished,
 } from 'react-icons/md';
+import { useTheme } from '../../../contexts/ThemeContext';
 
 const ContentManagement = () => {
+  const { isDarkMode } = useTheme();
   const [activeTab, setActiveTab] = useState('announcements');
   const [showEditor, setShowEditor] = useState(false);
   const [editingContent, setEditingContent] = useState(null);
-
-  const announcements = [
+  const [content, setContent] = useState([
     {
       id: 1,
-      title: 'Platform Maintenance Notice',
-      content: 'Scheduled maintenance on March 25th, 2024, from 2 AM to 4 AM IST.',
-      status: 'scheduled',
-      publishDate: '2024-03-25',
-      audience: 'all',
+      title: 'Welcome to TapNTrip',
+      content: 'Experience the best travel services with TapNTrip...',
+      status: 'published',
+      lastUpdated: '2024-03-15',
     },
     {
       id: 2,
-      title: 'New Feature Release',
-      content: 'Introducing instant booking confirmation for all services.',
-      status: 'published',
-      publishDate: '2024-03-15',
-      audience: 'users',
-    },
-    {
-      id: 3,
-      title: 'Special Offer Alert',
-      content: 'Get 10% off on all hotel bookings this weekend.',
+      title: 'New Features Coming Soon',
+      content: 'We are excited to announce new features...',
       status: 'draft',
-      publishDate: null,
-      audience: 'customers',
+      lastUpdated: '2024-03-14',
     },
-  ];
+  ]);
 
-  const faqs = [
-    {
-      id: 1,
-      question: 'How do I book a service?',
-      answer: 'You can book a service by...',
-      category: 'General',
-      status: 'published',
-    },
-    {
-      id: 2,
-      question: 'What is your cancellation policy?',
-      answer: 'Our cancellation policy allows...',
-      category: 'Bookings',
-      status: 'published',
-    },
-    {
-      id: 3,
-      question: 'How do I become a service provider?',
-      answer: 'To become a service provider...',
-      category: 'Services',
-      status: 'draft',
-    },
-  ];
-
-  const policies = [
-    {
-      id: 1,
-      title: 'Terms of Service',
-      lastUpdated: '2024-02-15',
-      status: 'published',
-      type: 'legal',
-    },
-    {
-      id: 2,
-      title: 'Privacy Policy',
-      lastUpdated: '2024-02-15',
-      status: 'published',
-      type: 'legal',
-    },
-    {
-      id: 3,
-      title: 'Refund Policy',
-      lastUpdated: '2024-03-01',
-      status: 'draft',
-      type: 'service',
-    },
-  ];
-
-  const handleEdit = (content) => {
-    setEditingContent(content);
+  const handleEdit = (item) => {
+    setEditingContent(item);
     setShowEditor(true);
   };
 
-  const handleDelete = (id, type) => {
-    // Implement delete logic
-    console.log(`Deleting ${type} with id ${id}`);
-  };
-
   const handlePublish = (id, type) => {
-    // Implement publish logic
-    console.log(`Publishing ${type} with id ${id}`);
+    setContent(content.map(item => 
+      item.id === id ? { ...item, status: 'published' } : item
+    ));
   };
 
   const handleUnpublish = (id, type) => {
-    // Implement unpublish logic
-    console.log(`Unpublishing ${type} with id ${id}`);
+    setContent(content.map(item => 
+      item.id === id ? { ...item, status: 'draft' } : item
+    ));
   };
 
-  const renderEditor = () => {
-    if (!showEditor) return null;
+  const handleDelete = (id, type) => {
+    setContent(content.filter(item => item.id !== id));
+  };
 
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-      >
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              {editingContent ? 'Edit Content' : 'Add New Content'}
-            </h2>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 rounded-lg border dark:border-gray-600 bg-white 
-                    dark:bg-gray-700 text-gray-900 dark:text-white"
-                  defaultValue={editingContent?.title}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Content
-                </label>
-                <textarea
-                  className="w-full px-4 py-2 rounded-lg border dark:border-gray-600 bg-white 
-                    dark:bg-gray-700 text-gray-900 dark:text-white h-40"
-                  defaultValue={editingContent?.content}
-                />
-              </div>
-
-              <div className="flex justify-end space-x-4">
-                <button
-                  onClick={() => setShowEditor(false)}
-                  className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 
-                    dark:hover:text-gray-100"
-                >
-                  Cancel
-                </button>
-                <button
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 
-                    transition-colors"
-                >
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    );
+  const handleSave = () => {
+    if (editingContent) {
+      setContent(content.map(item => 
+        item.id === editingContent.id ? editingContent : item
+      ));
+    } else {
+      setContent([...content, {
+        id: Date.now(),
+        ...editingContent,
+        status: 'draft',
+        lastUpdated: new Date().toISOString().split('T')[0],
+      }]);
+    }
+    setShowEditor(false);
+    setEditingContent(null);
   };
 
   return (
@@ -182,11 +82,13 @@ const ContentManagement = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
               activeTab === tab
-                ? 'bg-blue-500 text-white'
+                ? 'bg-blue-500 text-white shadow-lg'
                 : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
+            } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+            aria-label={`Switch to ${tab} tab`}
+            aria-pressed={activeTab === tab}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </motion.button>
@@ -202,210 +104,180 @@ const ContentManagement = () => {
           setShowEditor(true);
         }}
         className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 
-          transition-colors"
+          transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        aria-label={`Add new ${activeTab.slice(0, -1)}`}
       >
-        <MdAdd className="w-5 h-5 mr-2" />
+        <MdAdd className="w-5 h-5 mr-2 transform transition-transform duration-300 hover:rotate-90" />
         Add New {activeTab.slice(0, -1)}
       </motion.button>
 
       {/* Content List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {activeTab === 'announcements' &&
-          announcements.map((announcement) => (
+      <div className="space-y-4">
+        {content.map((item) => (
             <motion.div
-              key={announcement.id}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-3">
-                  <MdAnnouncement className="w-6 h-6 text-blue-500" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {announcement.title}
-                  </h3>
-                </div>
-                <span className={`px-2 py-1 text-xs rounded-full ${
-                  announcement.status === 'published'
-                    ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
-                    : announcement.status === 'scheduled'
-                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100'
-                    : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
-                }`}>
-                  {announcement.status}
-                </span>
-              </div>
-
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
-                {announcement.content}
-              </p>
-
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {announcement.publishDate || 'Not scheduled'}
-                </span>
+            key={item.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`p-4 rounded-lg border ${
+              isDarkMode 
+                ? 'bg-[#1f2937] border-[#2d3348]' 
+                : 'bg-white border-gray-200'
+            } transform transition-all duration-300 hover:scale-105 hover:shadow-lg`}
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-4`}>
+                  {item.content}
+                </p>
                 <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => handleEdit(announcement)}
-                    className="p-1 text-blue-600 dark:text-blue-400 hover:text-blue-900 
-                      dark:hover:text-blue-300"
-                  >
-                    <MdEdit className="w-5 h-5" />
-                  </button>
-                  {announcement.status === 'published' ? (
-                    <button
-                      onClick={() => handleUnpublish(announcement.id, 'announcement')}
-                      className="p-1 text-yellow-600 dark:text-yellow-400 hover:text-yellow-900 
-                        dark:hover:text-yellow-300"
-                    >
-                      <MdUnpublished className="w-5 h-5" />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handlePublish(announcement.id, 'announcement')}
-                      className="p-1 text-green-600 dark:text-green-400 hover:text-green-900 
-                        dark:hover:text-green-300"
-                    >
-                      <MdPublish className="w-5 h-5" />
-                    </button>
-                  )}
-                  <button
-                    onClick={() => handleDelete(announcement.id, 'announcement')}
-                    className="p-1 text-red-600 dark:text-red-400 hover:text-red-900 
-                      dark:hover:text-red-300"
-                  >
-                    <MdDelete className="w-5 h-5" />
-                  </button>
+                  <span className={`px-3 py-1 rounded-full text-sm ${
+                    item.status === 'published'
+                      ? 'bg-green-900/30 text-green-300'
+                      : 'bg-yellow-900/30 text-yellow-300'
+                  }`}>
+                    {item.status}
+                  </span>
+                  <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>
+                    Last updated: {item.lastUpdated}
+                  </span>
                 </div>
               </div>
-            </motion.div>
-          ))}
-
-        {activeTab === 'faqs' &&
-          faqs.map((faq) => (
-            <motion.div
-              key={faq.id}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-3">
-                  <MdHelp className="w-6 h-6 text-blue-500" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {faq.question}
-                  </h3>
-                </div>
-                <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800 
-                  dark:bg-gray-700 dark:text-gray-300">
-                  {faq.category}
-                </span>
-              </div>
-
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
-                {faq.answer}
-              </p>
 
               <div className="mt-4 flex items-center justify-end space-x-2">
-                <button
-                  onClick={() => handleEdit(faq)}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleEdit(item)}
                   className="p-1 text-blue-600 dark:text-blue-400 hover:text-blue-900 
-                    dark:hover:text-blue-300"
+                    dark:hover:text-blue-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                  aria-label={`Edit ${item.title}`}
                 >
                   <MdEdit className="w-5 h-5" />
-                </button>
-                {faq.status === 'published' ? (
-                  <button
-                    onClick={() => handleUnpublish(faq.id, 'faq')}
+                </motion.button>
+                {item.status === 'published' ? (
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleUnpublish(item.id, activeTab.slice(0, -1))}
                     className="p-1 text-yellow-600 dark:text-yellow-400 hover:text-yellow-900 
-                      dark:hover:text-yellow-300"
+                      dark:hover:text-yellow-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 rounded"
+                    aria-label={`Unpublish ${item.title}`}
                   >
                     <MdUnpublished className="w-5 h-5" />
-                  </button>
+                  </motion.button>
                 ) : (
-                  <button
-                    onClick={() => handlePublish(faq.id, 'faq')}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handlePublish(item.id, activeTab.slice(0, -1))}
                     className="p-1 text-green-600 dark:text-green-400 hover:text-green-900 
-                      dark:hover:text-green-300"
+                      dark:hover:text-green-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded"
+                    aria-label={`Publish ${item.title}`}
                   >
                     <MdPublish className="w-5 h-5" />
-                  </button>
+                  </motion.button>
                 )}
-                <button
-                  onClick={() => handleDelete(faq.id, 'faq')}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleDelete(item.id, activeTab.slice(0, -1))}
                   className="p-1 text-red-600 dark:text-red-400 hover:text-red-900 
-                    dark:hover:text-red-300"
+                    dark:hover:text-red-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 rounded"
+                  aria-label={`Delete ${item.title}`}
                 >
                   <MdDelete className="w-5 h-5" />
-                </button>
+                </motion.button>
               </div>
-            </motion.div>
-          ))}
-
-        {activeTab === 'policies' &&
-          policies.map((policy) => (
-            <motion.div
-              key={policy.id}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-3">
-                  <MdGavel className="w-6 h-6 text-blue-500" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {policy.title}
-                  </h3>
-                </div>
-                <span className={`px-2 py-1 text-xs rounded-full ${
-                  policy.type === 'legal'
-                    ? 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100'
-                    : 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100'
-                }`}>
-                  {policy.type}
-                </span>
-              </div>
-
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                Last updated: {policy.lastUpdated}
-              </p>
-
-              <div className="mt-4 flex items-center justify-end space-x-2">
-                <button
-                  onClick={() => handleEdit(policy)}
-                  className="p-1 text-blue-600 dark:text-blue-400 hover:text-blue-900 
-                    dark:hover:text-blue-300"
-                >
-                  <MdEdit className="w-5 h-5" />
-                </button>
-                {policy.status === 'published' ? (
-                  <button
-                    onClick={() => handleUnpublish(policy.id, 'policy')}
-                    className="p-1 text-yellow-600 dark:text-yellow-400 hover:text-yellow-900 
-                      dark:hover:text-yellow-300"
-                  >
-                    <MdUnpublished className="w-5 h-5" />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handlePublish(policy.id, 'policy')}
-                    className="p-1 text-green-600 dark:text-green-400 hover:text-green-900 
-                      dark:hover:text-green-300"
-                  >
-                    <MdPublish className="w-5 h-5" />
-                  </button>
-                )}
-                <button
-                  onClick={() => handleDelete(policy.id, 'policy')}
-                  className="p-1 text-red-600 dark:text-red-400 hover:text-red-900 
-                    dark:hover:text-red-300"
-                >
-                  <MdDelete className="w-5 h-5" />
-                </button>
               </div>
             </motion.div>
           ))}
       </div>
 
       {/* Content Editor Modal */}
-      {renderEditor()}
+      {showEditor && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className={`${
+              isDarkMode 
+                ? 'bg-[#1f2937] border-[#2d3348]' 
+                : 'bg-white border-gray-200'
+            } rounded-lg p-6 w-full max-w-2xl border transform transition-all duration-300 hover:shadow-xl`}
+          >
+            <h2 className="text-xl font-semibold mb-4">
+              {editingContent ? 'Edit' : 'Add New'} {activeTab.slice(0, -1)}
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="title" className="block text-sm font-medium mb-1">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  value={editingContent?.title || ''}
+                  onChange={(e) => setEditingContent({ ...editingContent, title: e.target.value })}
+                  className={`w-full px-3 py-2 rounded-lg border ${
+                    isDarkMode 
+                      ? 'bg-[#2d3348] border-[#3d4458] text-white' 
+                      : 'bg-white border-gray-300'
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200`}
+                />
+              </div>
+              <div>
+                <label htmlFor="content" className="block text-sm font-medium mb-1">
+                  Content
+                </label>
+                <textarea
+                  id="content"
+                  value={editingContent?.content || ''}
+                  onChange={(e) => setEditingContent({ ...editingContent, content: e.target.value })}
+                  rows={6}
+                  className={`w-full px-3 py-2 rounded-lg border ${
+                    isDarkMode 
+                      ? 'bg-[#2d3348] border-[#3d4458] text-white' 
+                      : 'bg-white border-gray-300'
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200`}
+                />
+              </div>
+              <div className="flex justify-end space-x-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowEditor(false)}
+                  className={`px-4 py-2 rounded-lg transition-all duration-200 ${
+                    isDarkMode 
+                      ? 'text-gray-400 hover:text-gray-100' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  } focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
+                  aria-label="Cancel editing"
+                >
+                  Cancel
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleSave}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 
+                    transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  aria-label="Save changes"
+                >
+                  Save
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 };

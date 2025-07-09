@@ -15,6 +15,7 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
+<<<<<<< HEAD
   useEffect(() => {
     // Apply zoom to the entire page smoothly
     const root = document.documentElement;
@@ -28,6 +29,8 @@ export const ThemeProvider = ({ children }) => {
     body.style.minHeight = `${100 / (zoomLevel / 100)}vh`;
   }, [zoomLevel]);
 
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };

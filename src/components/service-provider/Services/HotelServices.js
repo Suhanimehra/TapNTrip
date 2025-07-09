@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+<<<<<<< HEAD
 import { FaBed, FaEdit, FaTrash, FaPlus, FaSearch } from 'react-icons/fa';
+=======
+import { FaBed, FaEdit, FaTrash, FaPlus, FaWifi, FaParking, FaSwimmingPool, FaSpa, FaUtensils, FaSearch } from 'react-icons/fa';
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 import { hotelServicesDB } from '../../../services/database';
 import { handleApiError } from '../../../utils/errorHandler';
 import { toast } from 'react-toastify';
 import Modal from '../../common/Modal';
+<<<<<<< HEAD
 import { RoomForm } from './forms/HotelForms';
 import { PackageForm } from './forms/HotelForms';
 
@@ -14,13 +19,25 @@ const HotelServices = () => {
   // State management
   const [searchQuery, setSearchQuery] = useState('');
   const [rooms, setRooms] = useState([]);
+=======
+import { RoomForm, FacilityForm } from './forms/HotelForms';
+
+const HotelServices = () => {
+  const [activeTab, setActiveTab] = useState('rooms');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [rooms, setRooms] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalType, setModalType] = useState(''); // 'add', 'edit'
 
+<<<<<<< HEAD
   // Fetch rooms from Firestore
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line
@@ -30,8 +47,17 @@ const HotelServices = () => {
     try {
       setLoading(true);
       setError(null);
+<<<<<<< HEAD
       const roomsData = await hotelServicesDB.getRooms();
       setRooms(roomsData);
+=======
+      const [roomsData, facilitiesData] = await Promise.all([
+        hotelServicesDB.getRooms(),
+        hotelServicesDB.getFacilities()
+      ]);
+      setRooms(roomsData);
+      setFacilities(facilitiesData);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     } catch (error) {
       const errorMessage = handleApiError(error);
       setError(errorMessage);
@@ -41,6 +67,7 @@ const HotelServices = () => {
     }
   };
 
+<<<<<<< HEAD
   // Status change handler
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -48,6 +75,21 @@ const HotelServices = () => {
       setRooms(rooms.map(room => 
         room.id === id ? { ...room, status: newStatus } : room
       ));
+=======
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      if (activeTab === 'rooms') {
+        await hotelServicesDB.updateRoomStatus(id, newStatus);
+        setRooms(rooms.map(room => 
+          room.id === id ? { ...room, status: newStatus } : room
+        ));
+      } else {
+        await hotelServicesDB.updateFacilityStatus(id, newStatus);
+        setFacilities(facilities.map(facility => 
+          facility.id === id ? { ...facility, status: newStatus } : facility
+        ));
+      }
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       toast.success('Status updated successfully');
     } catch (error) {
       handleApiError(error);
@@ -55,11 +97,23 @@ const HotelServices = () => {
     }
   };
 
+<<<<<<< HEAD
   // Delete handler
   const handleDelete = async (id) => {
     try {
       await hotelServicesDB.deleteRoom(id);
       setRooms(rooms.filter(room => room.id !== id));
+=======
+  const handleDelete = async (id) => {
+    try {
+      if (activeTab === 'rooms') {
+        await hotelServicesDB.deleteRoom(id);
+        setRooms(rooms.filter(room => room.id !== id));
+      } else {
+        await hotelServicesDB.deleteFacility(id);
+        setFacilities(facilities.filter(facility => facility.id !== id));
+      }
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       toast.success('Item deleted successfully');
     } catch (error) {
       handleApiError(error);
@@ -67,21 +121,32 @@ const HotelServices = () => {
     }
   };
 
+<<<<<<< HEAD
   // Edit handler
   const handleEdit = (id) => {
     const item = rooms.find(room => room.id === id);
+=======
+  const handleEdit = (id) => {
+    const item = activeTab === 'rooms' 
+      ? rooms.find(room => room.id === id)
+      : facilities.find(facility => facility.id === id);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     setSelectedItem(item);
     setModalType('edit');
     setShowModal(true);
   };
 
+<<<<<<< HEAD
   // Add new handler
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   const handleAddNew = () => {
     setSelectedItem(null);
     setModalType('add');
     setShowModal(true);
   };
 
+<<<<<<< HEAD
   // Modal submit handler
   const handleModalSubmit = async (formData) => {
     try {
@@ -94,6 +159,31 @@ const HotelServices = () => {
         setRooms(rooms.map(room => 
           room.id === selectedItem.id ? updatedRoom : room
         ));
+=======
+  const handleModalSubmit = async (formData) => {
+    try {
+      if (modalType === 'add') {
+        if (activeTab === 'rooms') {
+          const newRoom = await hotelServicesDB.addRoom(formData);
+          setRooms([...rooms, newRoom]);
+        } else {
+          const newFacility = await hotelServicesDB.addFacility(formData);
+          setFacilities([...facilities, newFacility]);
+        }
+        toast.success('Item added successfully');
+      } else {
+        if (activeTab === 'rooms') {
+          const updatedRoom = await hotelServicesDB.updateRoom(selectedItem.id, formData);
+          setRooms(rooms.map(room => 
+            room.id === selectedItem.id ? updatedRoom : room
+          ));
+        } else {
+          const updatedFacility = await hotelServicesDB.updateFacility(selectedItem.id, formData);
+          setFacilities(facilities.map(facility => 
+            facility.id === selectedItem.id ? updatedFacility : facility
+          ));
+        }
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         toast.success('Item updated successfully');
       }
       setShowModal(false);
@@ -103,12 +193,26 @@ const HotelServices = () => {
     }
   };
 
+<<<<<<< HEAD
   // Filtered items for search
   const filteredItems = rooms.filter(room => 
     (room.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
     (room.type || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
     (room.description || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
+=======
+  const filteredItems = activeTab === 'rooms'
+    ? rooms.filter(room => 
+        room.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        room.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        room.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : facilities.filter(facility =>
+        facility.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        facility.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        facility.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
   if (loading) {
     return (
@@ -138,26 +242,42 @@ const HotelServices = () => {
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
+<<<<<<< HEAD
       {/* Header and Add New */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">My Hotel Rooms</h2>
+=======
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">My Hotel Services</h2>
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         <div className="flex flex-wrap gap-3 w-full sm:w-auto">
           <button
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transform hover:-translate-y-0.5 transition-all shadow-md hover:shadow-lg"
             onClick={handleAddNew}
           >
+<<<<<<< HEAD
             <FaPlus /> Add New Room
+=======
+            <FaPlus /> Add New {activeTab === 'rooms' ? 'Room' : 'Facility'}
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
           </button>
         </div>
       </div>
 
+<<<<<<< HEAD
       {/* Search */}
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <div className="flex-1">
           <div className="relative">
             <input
               type="text"
+<<<<<<< HEAD
               placeholder="Search rooms..."
+=======
+              placeholder={`Search ${activeTab}...`}
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-4 py-3 pl-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
@@ -165,9 +285,36 @@ const HotelServices = () => {
             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
+<<<<<<< HEAD
       </div>
 
       {/* Room Cards */}
+=======
+        <div className="flex gap-2">
+          <button
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              activeTab === 'rooms'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+            }`}
+            onClick={() => setActiveTab('rooms')}
+          >
+            Rooms
+          </button>
+          <button
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              activeTab === 'facilities'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+            }`}
+            onClick={() => setActiveTab('facilities')}
+          >
+            Facilities
+          </button>
+        </div>
+      </div>
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredItems.map((item) => (
           <motion.div
@@ -177,16 +324,32 @@ const HotelServices = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
+<<<<<<< HEAD
             {/* Room Card */}
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{item.name || 'N/A'}</h3>
                   <p className="text-gray-600 dark:text-gray-400">{item.type || 'N/A'}</p>
+=======
+            <div className="h-48 overflow-hidden">
+              <img
+                src={item.image || 'https://via.placeholder.com/150'}
+                alt={item.name}
+                className="w-full h-full object-cover transition-transform hover:scale-105"
+              />
+            </div>
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{item.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-400">{item.type}</p>
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                 </div>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                   item.status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                 }`}>
+<<<<<<< HEAD
                   {item.status || 'N/A'}
                 </span>
               </div>
@@ -200,6 +363,50 @@ const HotelServices = () => {
                   <p className="font-medium text-gray-900 dark:text-white">₹{item.price || 'N/A'}</p>
                 </div>
               </div>
+=======
+                  {item.status}
+                </span>
+              </div>
+
+              {activeTab === 'rooms' ? (
+                <>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{item.description}</p>
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Price</p>
+                      <p className="font-medium text-gray-900 dark:text-white">${item.price}/night</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Capacity</p>
+                      <p className="font-medium text-gray-900 dark:text-white">{item.capacity} people</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Beds</p>
+                      <p className="font-medium text-gray-900 dark:text-white">{item.beds}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Size</p>
+                      <p className="font-medium text-gray-900 dark:text-white">{item.size} sqft</p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{item.description}</p>
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Cost</p>
+                      <p className="font-medium text-gray-900 dark:text-white">${item.cost}/use</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Availability</p>
+                      <p className="font-medium text-gray-900 dark:text-white">{item.availability}</p>
+                    </div>
+                  </div>
+                </>
+              )}
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
               <div className="flex justify-end gap-2 mt-4">
                 <button
                   onClick={() => handleEdit(item.id)}
@@ -223,6 +430,7 @@ const HotelServices = () => {
         <Modal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
+<<<<<<< HEAD
           title={`${modalType === 'add' ? 'Add New' : 'Edit'} Room`}
         >
           <RoomForm
@@ -230,12 +438,30 @@ const HotelServices = () => {
             onSubmit={handleModalSubmit}
             onCancel={() => setShowModal(false)}
           />
+=======
+          title={`${modalType === 'add' ? 'Add New' : 'Edit'} ${activeTab === 'rooms' ? 'Room' : 'Facility'}`}
+        >
+          {activeTab === 'rooms' ? (
+            <RoomForm
+              initialData={selectedItem}
+              onSubmit={handleModalSubmit}
+              onCancel={() => setShowModal(false)}
+            />
+          ) : (
+            <FacilityForm
+              initialData={selectedItem}
+              onSubmit={handleModalSubmit}
+              onCancel={() => setShowModal(false)}
+            />
+          )}
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         </Modal>
       )}
     </div>
   );
 };
 
+<<<<<<< HEAD
 
 
 export const HotelPackages = ({ providerId }) => {
@@ -460,4 +686,6 @@ export const HotelPackages = ({ providerId }) => {
   );
 };
 
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 export default HotelServices; 

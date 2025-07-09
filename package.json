@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@react-google-maps/api": "^2.20.7",
     "@sentry/react": "^7.0.0",
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.10.0",
+<<<<<<< HEAD
     "compression": "^1.7.4",
     "firebase": "^10.7.1",
     "framer-motion": "^10.16.4",
@@ -28,6 +32,17 @@
     "recharts": "^3.0.2",
     "web-vitals": "^2.1.4",
     "workbox-webpack-plugin": "^6.5.4"
+=======
+    "firebase": "^10.7.1",
+    "framer-motion": "^10.16.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.21.1",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^11.0.5",
+    "web-vitals": "^2.1.4"
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   },
   "scripts": {
     "start": "react-scripts start",
@@ -63,6 +78,7 @@
     "@babel/plugin-transform-private-methods": "^7.23.4",
     "@babel/plugin-transform-private-property-in-object": "^7.23.4",
     "@babel/preset-react": "^7.23.3",
+<<<<<<< HEAD
     "@testing-library/cypress": "^8.0.3",
     "autoprefixer": "^10.4.21",
     "cypress": "^9.5.4",
@@ -102,5 +118,10 @@
         "statements": 80
       }
     }
+=======
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^3.4.17"
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   }
 }

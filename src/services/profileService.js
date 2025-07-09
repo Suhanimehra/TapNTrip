@@ -54,8 +54,12 @@ export const profileService = {
     try {
       const profileRef = doc(db, 'service_providers', userId);
       const defaultProfile = getDefaultProfile(providerType);
+<<<<<<< HEAD
       // Always set status to 'pending' for new providers
       const profileData = { ...defaultProfile, ...initialData, providerType, userId, status: 'pending' };
+=======
+      const profileData = { ...defaultProfile, ...initialData, providerType, userId };
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       await setDoc(profileRef, profileData);
       console.log(`New profile created for ${userId} with type ${providerType}.`);
       return true;

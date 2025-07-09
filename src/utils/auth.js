@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { auth } from "../firebase-config";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+=======
+import { useNavigate } from 'react-router-dom';
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
 // Role-based route paths
 export const ROUTE_PATHS = {
@@ -53,6 +57,7 @@ export const useAuthRedirect = (user) => {
       navigate(getRedirectPath(user.role));
     }
   }, [user, navigate]);
+<<<<<<< HEAD
 };
 
 // Register (Sign Up)
@@ -65,4 +70,6 @@ export const login = (email, password) => signInWithEmailAndPassword(auth, email
 export const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider);
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 }; 

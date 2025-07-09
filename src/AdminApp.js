@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Layout from './components/admin/Dashboard/Layout';
 import AdminDashboard from './components/admin/Dashboard/AdminDashboard';
+<<<<<<< HEAD
 import UserManagement from './components/admin/UserManagement';
 import ServiceManagementNew from './components/admin/Dashboard/ServiceManagementNew';
 import BookingManagement from './components/admin/Dashboard/BookingManagement';
@@ -10,6 +11,13 @@ import ContentManagement from './components/admin/Dashboard/ContentManagement';
 import Settings from './components/admin/Dashboard/Settings';
 import AdminManagement from './components/admin/Dashboard/AdminManagement';
 import PaymentManagement from './components/admin/Dashboard/PaymentManagement';
+=======
+import UserManagement from './components/admin/Dashboard/UserManagement';
+import ServiceManagement from './components/admin/Dashboard/ServiceManagement';
+import BookingManagement from './components/admin/Dashboard/BookingManagement';
+import ContentManagement from './components/admin/Dashboard/ContentManagement';
+import Settings from './components/admin/Dashboard/Settings';
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
 function AdminApp() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -21,17 +29,24 @@ function AdminApp() {
       case 'users':
         return <UserManagement />;
       case 'services':
+<<<<<<< HEAD
         return <ServiceManagementNew />;
+=======
+        return <ServiceManagement />;
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       case 'bookings':
         return <BookingManagement />;
       case 'content':
         return <ContentManagement />;
       case 'settings':
         return <Settings />;
+<<<<<<< HEAD
       case 'admins':
         return <AdminManagement />;
       case 'payments':
         return <PaymentManagement />;
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       default:
         return <AdminDashboard />;
     }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 const ContentManagement = () => {
+<<<<<<< HEAD
   const [destinations, setDestinations] = useState([]);
 
   const [settings, setSettings] = useState({
@@ -9,6 +10,41 @@ const ContentManagement = () => {
     contactPhone: '',
     defaultLanguage: '',
     availableLanguages: [],
+=======
+  const [destinations, setDestinations] = useState([
+    {
+      id: 1,
+      name: 'Varanasi',
+      description: 'Holy city on the banks of the Ganges River',
+      category: 'temple',
+      featured: true,
+      status: 'published',
+    },
+    {
+      id: 2,
+      name: 'Tirupati',
+      description: 'Home to the famous Venkateswara Temple',
+      category: 'temple',
+      featured: true,
+      status: 'published',
+    },
+    {
+      id: 3,
+      name: 'Ajmer Sharif',
+      description: 'Dargah of Sufi saint Moinuddin Chishti',
+      category: 'dargah',
+      featured: false,
+      status: 'draft',
+    },
+  ]);
+
+  const [settings, setSettings] = useState({
+    siteName: '1TapDarshan',
+    supportEmail: 'support@1tapdarshan.com',
+    contactPhone: '+91 1234567890',
+    defaultLanguage: 'english',
+    availableLanguages: ['english', 'hindi', 'tamil', 'telugu', 'marathi'],
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     maintenanceMode: false,
   });
 
@@ -84,11 +120,15 @@ const ContentManagement = () => {
                 </tr>
               </thead>
               <tbody>
+<<<<<<< HEAD
                 {destinations.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="py-4 px-4 text-center text-gray-400">No destinations available.</td>
                   </tr>
                 ) : destinations.map((destination) => (
+=======
+                {destinations.map((destination) => (
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                   <tr key={destination.id} className="border-b border-gray-100">
                     <td className="py-4 px-4">{destination.name}</td>
                     <td className="py-4 px-4">{destination.description}</td>

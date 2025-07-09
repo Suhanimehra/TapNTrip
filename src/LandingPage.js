@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from './contexts/AuthContext';
+<<<<<<< HEAD
 import { Link, useNavigate } from 'react-router-dom';
 
 function LandingPage() {
@@ -14,6 +15,11 @@ function LandingPage() {
     }, 3500); // 3.5 seconds
     return () => clearTimeout(timer);
   }, [navigate]);
+=======
+
+function LandingPage() {
+  const { user, userRole } = useAuth();
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">

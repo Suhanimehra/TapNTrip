@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaCalendarAlt, FaSearch, FaFilter, FaCar } from 'react-icons/fa';
@@ -49,6 +50,63 @@ const TransportBookings = () => {
   if (loading) return <div className="text-center py-8">Loading bookings...</div>;
   if (error) return <div className="text-center py-8 text-red-600">{error}</div>;
 
+=======
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { FaCalendarAlt, FaSearch, FaFilter, FaCar } from 'react-icons/fa';
+
+const TransportBookings = () => {
+  const [activeTab, setActiveTab] = useState('upcoming');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const bookings = [
+    {
+      id: 1,
+      customerName: 'David Lee',
+      vehicleType: 'SUV',
+      pickupLocation: 'Airport Terminal 1',
+      dropoffLocation: 'Grand Hotel',
+      date: '2024-03-15',
+      duration: '5 days',
+      status: 'confirmed',
+      amount: '₹25,000',
+      passengers: 4,
+      specialRequests: 'Child seat needed'
+    },
+    {
+      id: 2,
+      customerName: 'Emma White',
+      vehicleType: 'Sedan',
+      pickupLocation: 'City Center',
+      dropoffLocation: 'Beach Resort',
+      date: '2024-03-16',
+      duration: '3 days',
+      status: 'pending',
+      amount: '₹15,000',
+      passengers: 2,
+      specialRequests: 'Extra luggage space'
+    },
+    {
+      id: 3,
+      customerName: 'John Smith',
+      vehicleType: 'Luxury Van',
+      pickupLocation: 'Hotel Plaza',
+      dropoffLocation: 'Conference Center',
+      date: '2024-03-17',
+      duration: '1 day',
+      status: 'confirmed',
+      amount: '₹8,000',
+      passengers: 6,
+      specialRequests: 'Business class service'
+    }
+  ];
+
+  const handleStatusChange = (bookingId, newStatus) => {
+    // Implement status change logic
+    console.log(`Changing booking ${bookingId} status to ${newStatus}`);
+  };
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   return (
     <div className="space-y-6">
       {/* Header with Search and Filter */}
@@ -95,9 +153,13 @@ const TransportBookings = () => {
 
       {/* Bookings List */}
       <div className="space-y-4">
+<<<<<<< HEAD
         {filteredBookings.length === 0 ? (
           <div className="text-center text-gray-500">No bookings found.</div>
         ) : filteredBookings.map((booking) => (
+=======
+        {bookings.map((booking) => (
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
           <motion.div
             key={booking.id}
             initial={{ opacity: 0, y: 20 }}
@@ -112,7 +174,11 @@ const TransportBookings = () => {
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
                   <FaCalendarAlt />
+<<<<<<< HEAD
                   <span>{booking.date} {booking.duration && `(${booking.duration})`}</span>
+=======
+                  <span>{booking.date} ({booking.duration})</span>
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                 </div>
                 <p className="text-sm">Vehicle: {booking.vehicleType}</p>
                 <p className="text-sm">Passengers: {booking.passengers}</p>
@@ -128,8 +194,11 @@ const TransportBookings = () => {
                 <span className={`px-3 py-1 rounded-full text-sm ${
                   booking.status === 'confirmed'
                     ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+<<<<<<< HEAD
                     : booking.status === 'cancelled'
                     ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                     : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
                 }`}>
                   {booking.status}
@@ -139,14 +208,20 @@ const TransportBookings = () => {
                   <button
                     onClick={() => handleStatusChange(booking.id, 'confirmed')}
                     className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+<<<<<<< HEAD
                     disabled={booking.status === 'confirmed'}
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                   >
                     Confirm
                   </button>
                   <button
                     onClick={() => handleStatusChange(booking.id, 'cancelled')}
                     className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+<<<<<<< HEAD
                     disabled={booking.status === 'cancelled'}
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                   >
                     Cancel
                   </button>

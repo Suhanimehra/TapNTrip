@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaSave, FaTimes } from 'react-icons/fa';
+<<<<<<< HEAD
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
 export const TourForm = ({ tour, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -9,10 +12,21 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
     duration: '',
     price: '',
     location: '',
+<<<<<<< HEAD
     image: ''
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
+=======
+    inclusions: '',
+    description: '',
+    image: '',
+    status: 'active'
+  });
+
+  const languageOptions = ['English', 'Spanish', 'French', 'German', 'Italian', 'Chinese', 'Japanese', 'Arabic'];
+  const specialtyOptions = ['History', 'Culture', 'Nature', 'Food', 'Architecture', 'Photography', 'Adventure', 'Local Experience'];
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
   useEffect(() => {
     if (tour) {
@@ -22,9 +36,17 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
         duration: tour.duration || '',
         price: tour.price || '',
         location: tour.location || '',
+<<<<<<< HEAD
         image: tour.image || ''
       });
       setImagePreview(tour.image || '');
+=======
+        inclusions: Array.isArray(tour.inclusions) ? tour.inclusions.join(', ') : tour.inclusions || '',
+        description: tour.description || '',
+        image: tour.image || '',
+        status: tour.status || 'active'
+      });
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     }
   }, [tour]);
 
@@ -36,6 +58,7 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
     }));
   };
 
+<<<<<<< HEAD
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -54,6 +77,27 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
       imageUrl = await getDownloadURL(imageRef);
     }
     onSubmit({ ...formData, image: imageUrl });
+=======
+  const handleMultiSelect = (e, field) => {
+    const options = Array.from(e.target.selectedOptions, option => option.value);
+    setFormData(prev => ({
+      ...prev,
+      [field]: options
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dataToSubmit = { ...formData };
+
+    if (dataToSubmit.inclusions) {
+      dataToSubmit.inclusions = dataToSubmit.inclusions.split(',').map(item => item.trim()).filter(item => item !== '');
+    } else {
+      dataToSubmit.inclusions = [];
+    }
+
+    onSubmit(dataToSubmit);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   };
 
   return (
@@ -72,6 +116,10 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
             required
           />
         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         <div>
           <label htmlFor="tourType" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Tour Type</label>
           <select
@@ -90,6 +138,10 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
             <option value="Adventure Tour">Adventure Tour</option>
           </select>
         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         <div>
           <label htmlFor="duration" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Duration (hours)</label>
           <input
@@ -102,6 +154,10 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
             required
           />
         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         <div>
           <label htmlFor="price" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Price</label>
           <input
@@ -114,6 +170,10 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
             required
           />
         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         <div className="col-span-full">
           <label htmlFor="location" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Location</label>
           <input
@@ -127,6 +187,7 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
             required
           />
         </div>
+<<<<<<< HEAD
         <div className="col-span-full">
           <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Tour Image</label>
           <input
@@ -140,6 +201,64 @@ export const TourForm = ({ tour, onSubmit, onCancel }) => {
           )}
         </div>
       </div>
+=======
+      </div>
+
+      <div className="col-span-full">
+        <label htmlFor="inclusions" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Inclusions (comma-separated)</label>
+        <textarea
+          id="inclusions"
+          name="inclusions"
+          value={formData.inclusions}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          rows="2"
+          placeholder="e.g., Guide, Transportation, Entrance Fees"
+        />
+      </div>
+
+      <div className="col-span-full">
+        <label htmlFor="description" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          rows="3"
+          placeholder="e.g., An immersive walking tour exploring the city's hidden gems..."
+        />
+      </div>
+
+      <div className="col-span-full">
+        <label htmlFor="image" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Image URL</label>
+        <input
+          type="url"
+          id="image"
+          name="image"
+          value={formData.image}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          placeholder="e.g., https://example.com/tour-image.jpg"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="status" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Status</label>
+        <select
+          id="status"
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="seasonal">Seasonal</option>
+        </select>
+      </div>
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200 dark:border-gray-700">
         <button
           type="button"

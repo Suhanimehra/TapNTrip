@@ -6,20 +6,47 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
     name: '',
     type: '',
     capacity: '',
+<<<<<<< HEAD
     price: '',
+=======
+    features: '',
+    make: '',
+    model: '',
+    year: '',
+    licensePlate: '',
+    fuelType: '',
+    transmission: '',
+    mileage: '',
+    description: '',
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     image: '',
     status: 'active'
   });
 
+<<<<<<< HEAD
   const [imagePreview, setImagePreview] = useState('');
 
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   useEffect(() => {
     if (vehicle) {
       setFormData({
         name: vehicle.name || '',
         type: vehicle.type || '',
         capacity: vehicle.capacity || '',
+<<<<<<< HEAD
         price: vehicle.price || '',
+=======
+        features: Array.isArray(vehicle.features) ? vehicle.features.join(', ') : vehicle.features || '',
+        make: vehicle.make || '',
+        model: vehicle.model || '',
+        year: vehicle.year || '',
+        licensePlate: vehicle.licensePlate || '',
+        fuelType: vehicle.fuelType || '',
+        transmission: vehicle.transmission || '',
+        mileage: vehicle.mileage || '',
+        description: vehicle.description || '',
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         image: vehicle.image || '',
         status: vehicle.status || 'active'
       });
@@ -34,6 +61,7 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
     }));
   };
 
+<<<<<<< HEAD
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -45,6 +73,18 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataToSubmit = { ...formData };
+=======
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dataToSubmit = { ...formData };
+
+    if (dataToSubmit.features) {
+      dataToSubmit.features = dataToSubmit.features.split(',').map(feature => feature.trim()).filter(f => f !== '');
+    } else {
+      dataToSubmit.features = [];
+    }
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     onSubmit(dataToSubmit);
   };
 
@@ -64,6 +104,10 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
             required
           />
         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         <div>
           <label htmlFor="vehicleType" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Vehicle Type</label>
           <select
@@ -81,6 +125,7 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
             <option value="Luxury Vehicle">Luxury Vehicle</option>
           </select>
         </div>
+<<<<<<< HEAD
         <div>
           <label htmlFor="capacity" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Capacity</label>
           <input
@@ -88,11 +133,22 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
             id="capacity"
             name="capacity"
             value={formData.capacity}
+=======
+
+        <div>
+          <label htmlFor="make" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Make</label>
+          <input
+            type="text"
+            id="make"
+            name="make"
+            value={formData.make}
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
             onChange={handleChange}
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
             required
           />
         </div>
+<<<<<<< HEAD
         <div>
           <label htmlFor="price" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Price</label>
           <input
@@ -100,11 +156,22 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
             id="price"
             name="price"
             value={formData.price}
+=======
+
+        <div>
+          <label htmlFor="model" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Model</label>
+          <input
+            type="text"
+            id="model"
+            name="model"
+            value={formData.model}
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
             onChange={handleChange}
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
             required
           />
         </div>
+<<<<<<< HEAD
       </div>
       <div className="col-span-full">
         <label htmlFor="vehicleImage" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Vehicle Image</label>
@@ -133,6 +200,149 @@ export const VehicleForm = ({ vehicle, onSubmit, onCancel }) => {
           className="flex items-center gap-2 px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-semibold shadow-lg"
         >
           <FaSave /> Save Vehicle
+=======
+
+        <div>
+          <label htmlFor="year" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Year</label>
+          <input
+            type="number"
+            id="year"
+            name="year"
+            value={formData.year}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="licensePlate" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">License Plate</label>
+          <input
+            type="text"
+            id="licensePlate"
+            name="licensePlate"
+            value={formData.licensePlate}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="fuelType" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Fuel Type</label>
+          <select
+            id="fuelType"
+            name="fuelType"
+            value={formData.fuelType}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          >
+            <option value="">Select Fuel Type</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric</option>
+            <option value="Hybrid">Hybrid</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="transmission" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Transmission</label>
+          <select
+            id="transmission"
+            name="transmission"
+            value={formData.transmission}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          >
+            <option value="">Select Transmission</option>
+            <option value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="mileage" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Mileage (km/l or miles/gallon)</label>
+          <input
+            type="number"
+            id="mileage"
+            name="mileage"
+            value={formData.mileage}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          />
+        </div>
+      </div>
+
+      <div className="col-span-full">
+        <label htmlFor="description" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          rows="3"
+          placeholder="e.g., A spacious and comfortable car, perfect for city driving..."
+        />
+      </div>
+
+      <div className="col-span-full">
+        <label htmlFor="features" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Features (comma-separated)</label>
+        <textarea
+          id="features"
+          name="features"
+          value={formData.features}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          rows="2"
+          placeholder="e.g., AC, WiFi, Entertainment System"
+        />
+      </div>
+
+      <div className="col-span-full">
+        <label htmlFor="image" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Image URL</label>
+        <input
+          type="url"
+          id="image"
+          name="image"
+          value={formData.image}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+          placeholder="e.g., https://example.com/vehicle-image.jpg"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="status" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">Status</label>
+        <select
+          id="status"
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition duration-200 ease-in-out text-base"
+        >
+          <option value="active">Active</option>
+          <option value="maintenance">Maintenance</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+
+      <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-base font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+        >
+          <FaTimes className="inline-block mr-2" />
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-6 py-2 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out transform hover:scale-105"
+        >
+          <FaSave className="inline-block mr-2" />
+          Save
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         </button>
       </div>
     </form>

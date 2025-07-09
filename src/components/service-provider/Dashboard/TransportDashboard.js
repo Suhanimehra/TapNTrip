@@ -6,9 +6,14 @@ import { transportServicesDB } from '../../../services/database';
 import { earningsService } from '../../../services/earningsService';
 import { reviewsService } from '../../../services/reviewsService';
 import { toast } from 'react-toastify';
+<<<<<<< HEAD
 import { getProviderTransportBookings } from '../../../services/firestoreService';
 
 const TransportDashboard = ({ setActiveSection }) => {
+=======
+
+const TransportDashboard = () => {
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   const { user, loading: authLoading } = useAuth();
   const [profile, setProfile] = useState(null);
   const [bookings, setBookings] = useState([]);
@@ -29,16 +34,25 @@ const TransportDashboard = ({ setActiveSection }) => {
           const fetchedProfile = await profileService.getProfile(user.uid);
           setProfile(fetchedProfile);
 
+<<<<<<< HEAD
           // Fetch Bookings (real data)
           const fetchedBookings = await getProviderTransportBookings(user.uid);
           setBookings(fetchedBookings);
+=======
+          // Fetch Bookings (placeholder for now)
+          setBookings([]);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
           // Fetch Services (Vehicles and Routes)
           const [vehiclesData, routesData] = await Promise.all([
             transportServicesDB.getVehicles(),
             transportServicesDB.getRoutes()
           ]);
+<<<<<<< HEAD
           setServices([...vehiclesData, ...routesData]);
+=======
+          setServices([...vehiclesData, ...routesData]); // Combine for active services count
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
           // Fetch Earnings
           const fetchedEarnings = await earningsService.getEarnings(user.uid);
@@ -180,12 +194,19 @@ const TransportDashboard = ({ setActiveSection }) => {
 
         {/* Quick Links / CTAs */}
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
+<<<<<<< HEAD
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+=======
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
           <motion.button
             variants={cardVariants}
             whileHover="hover"
             className="bg-indigo-600 text-white p-6 rounded-lg shadow hover:bg-indigo-700 transition-colors"
+<<<<<<< HEAD
             onClick={() => setActiveSection('bookings')}
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
           >
             View All Bookings
           </motion.button>
@@ -193,10 +214,23 @@ const TransportDashboard = ({ setActiveSection }) => {
             variants={cardVariants}
             whileHover="hover"
             className="bg-teal-600 text-white p-6 rounded-lg shadow hover:bg-teal-700 transition-colors"
+<<<<<<< HEAD
             onClick={() => setActiveSection('services')}
           >
             Manage Vehicles/Routes
           </motion.button>
+=======
+          >
+            Manage Vehicles/Routes
+          </motion.button>
+          <motion.button
+            variants={cardVariants}
+            whileHover="hover"
+            className="bg-rose-600 text-white p-6 rounded-lg shadow hover:bg-rose-700 transition-colors"
+          >
+            Add New Vehicle/Route
+          </motion.button>
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         </div>
       </div>
     </motion.div>

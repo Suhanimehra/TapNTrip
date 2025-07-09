@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // HotelBookings: Shows real bookings for this hotel provider from Firestore
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -48,6 +49,55 @@ const HotelBookings = () => {
     } catch (e) {
       alert('Failed to update status');
     }
+=======
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { FaCalendarAlt, FaSearch, FaFilter } from 'react-icons/fa';
+
+const HotelBookings = () => {
+  const [activeTab, setActiveTab] = useState('upcoming');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const bookings = [
+    {
+      id: 1,
+      guestName: 'Rajesh Kumar',
+      roomType: 'Deluxe Suite',
+      checkIn: '2024-03-15',
+      checkOut: '2024-03-18',
+      status: 'confirmed',
+      amount: '₹15,000',
+      guests: 2,
+      specialRequests: 'Early check-in requested'
+    },
+    {
+      id: 2,
+      guestName: 'Priya Singh',
+      roomType: 'Executive Room',
+      checkIn: '2024-03-16',
+      checkOut: '2024-03-20',
+      status: 'pending',
+      amount: '₹20,000',
+      guests: 3,
+      specialRequests: 'Extra bed needed'
+    },
+    {
+      id: 3,
+      guestName: 'Amit Patel',
+      roomType: 'Presidential Suite',
+      checkIn: '2024-03-17',
+      checkOut: '2024-03-19',
+      status: 'confirmed',
+      amount: '₹25,000',
+      guests: 4,
+      specialRequests: 'Airport pickup requested'
+    }
+  ];
+
+  const handleStatusChange = (bookingId, newStatus) => {
+    // Implement status change logic
+    console.log(`Changing booking ${bookingId} status to ${newStatus}`);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   };
 
   return (
@@ -96,6 +146,7 @@ const HotelBookings = () => {
 
       {/* Bookings List */}
       <div className="space-y-4">
+<<<<<<< HEAD
         {loading ? (
           <div className="text-center text-gray-500 dark:text-gray-400 py-8">Loading bookings...</div>
         ) : filteredBookings.length === 0 ? (
@@ -150,10 +201,63 @@ const HotelBookings = () => {
             </motion.div>
           ))
         )}
+=======
+        {bookings.map((booking) => (
+          <motion.div
+            key={booking.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6"
+          >
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold">{booking.guestName}</h3>
+                <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                  <FaCalendarAlt />
+                  <span>{booking.checkIn} - {booking.checkOut}</span>
+                </div>
+                <p className="text-sm">{booking.roomType}</p>
+                <p className="text-sm">Guests: {booking.guests}</p>
+                {booking.specialRequests && (
+                  <p className="text-sm text-blue-500">Special Request: {booking.specialRequests}</p>
+                )}
+              </div>
+              <div className="flex flex-col items-end space-y-2">
+                <span className={`px-3 py-1 rounded-full text-sm ${
+                  booking.status === 'confirmed'
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                    : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                }`}>
+                  {booking.status}
+                </span>
+                <p className="font-semibold">{booking.amount}</p>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleStatusChange(booking.id, 'confirmed')}
+                    className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    onClick={() => handleStatusChange(booking.id, 'cancelled')}
+                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       </div>
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default HotelBookings; 
 // Firestore integration: uses getProviderHotelBookings to fetch bookings and updates status in Firestore 
+=======
+export default HotelBookings; 
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47

@@ -3,9 +3,21 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from "firebase/analytics";
+<<<<<<< HEAD
 import { getStorage } from 'firebase/storage';
 
 
+=======
+
+// TODO: Replace with your Firebase configuration
+// You can find these values in your Firebase Console:
+// 1. Go to console.firebase.google.com
+// 2. Select your project
+// 3. Click on the gear icon next to "Project Overview"
+// 4. Click "Project settings"
+// 5. Scroll down to "Your apps" section
+// 6. Under the "</>" icon, you'll find these configuration values
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 const firebaseConfig = {
   apiKey: "AIzaSyCvWs7LyadmMf2d9ikHPo8i2ZEu03aq_VY",
   authDomain: "tap-86240.firebaseapp.com",
@@ -21,6 +33,11 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+<<<<<<< HEAD
 const storage = getStorage(app);
 
 export { auth, db, analytics, storage }; 
+=======
+
+export { auth, db, analytics }; 
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47

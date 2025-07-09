@@ -73,6 +73,7 @@ export const hotelServicesDB = {
   updateFacilityStatus: async (id, status) => {
     const facilityRef = doc(db, 'hotel_facilities', id);
     await updateDoc(facilityRef, { status });
+<<<<<<< HEAD
   },
 
   // Packages
@@ -105,16 +106,24 @@ export const hotelServicesDB = {
   updatePackageStatus: async (id, status) => {
     const packageRef = doc(db, 'hotel_packages', id);
     await updateDoc(packageRef, { status });
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   }
 };
 
 // Transport Services
 export const transportServicesDB = {
   // Vehicles
+<<<<<<< HEAD
   getVehicles: async (providerId) => {
     const vehiclesRef = collection(db, 'transport_vehicles');
     const q = providerId ? query(vehiclesRef, where('providerId', '==', providerId)) : vehiclesRef;
     const snapshot = await getDocs(q);
+=======
+  getVehicles: async () => {
+    const vehiclesRef = collection(db, 'transport_vehicles');
+    const snapshot = await getDocs(vehiclesRef);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   },
 
@@ -143,10 +152,16 @@ export const transportServicesDB = {
   },
 
   // Routes
+<<<<<<< HEAD
   getRoutes: async (providerId) => {
     const routesRef = collection(db, 'transport_routes');
     const q = providerId ? query(routesRef, where('providerId', '==', providerId)) : routesRef;
     const snapshot = await getDocs(q);
+=======
+  getRoutes: async () => {
+    const routesRef = collection(db, 'transport_routes');
+    const snapshot = await getDocs(routesRef);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   },
 

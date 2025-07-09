@@ -6,6 +6,7 @@ import { signOut } from 'firebase/auth';
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [metrics] = useState({
+<<<<<<< HEAD
     totalUsers: 0,
     activeUsers: 0,
     totalBookings: 0,
@@ -13,6 +14,28 @@ const AdminDashboard = () => {
   });
 
   const [recentProviders] = useState([]);
+=======
+    totalUsers: 1250,
+    activeUsers: 850,
+    totalBookings: 3200,
+    revenue: '₹1.2M'
+  });
+
+  const [recentProviders] = useState([
+    {
+      name: 'Air India',
+      type: 'Airline',
+      status: 'Active',
+      date: '2024-01-15'
+    },
+    {
+      name: 'Taj Hotels',
+      type: 'Hotel Chain',
+      status: 'Active',
+      date: '2024-01-14'
+    }
+  ]);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
   const handleLogout = async () => {
     try {
@@ -76,11 +99,15 @@ const AdminDashboard = () => {
               </tr>
             </thead>
             <tbody>
+<<<<<<< HEAD
               {recentProviders.length === 0 ? (
                 <tr>
                   <td colSpan="5" className="py-4 px-4 text-center text-gray-400">No pending provider approvals.</td>
                 </tr>
               ) : recentProviders.map((provider) => (
+=======
+              {recentProviders.map((provider) => (
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                 <tr key={provider.name} className="border-b border-gray-100">
                   <td className="py-4 px-4">{provider.name}</td>
                   <td className="py-4 px-4 capitalize">{provider.type}</td>

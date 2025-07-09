@@ -78,6 +78,7 @@ export const guideServicesAPI = {
   updateTour: (id, tour) => api.put(`/guide/tours/${id}`, tour),
   deleteTour: (id) => api.delete(`/guide/tours/${id}`),
   updateTourStatus: (id, status) => api.patch(`/guide/tours/${id}/status`, { status })
+<<<<<<< HEAD
 };
 
 // Booking API endpoints
@@ -131,3 +132,6 @@ export async function saveHealthProfile(profile) {
   if (!res.ok) throw new Error('Failed to save health profile');
   return res.json();
 } 
+=======
+}; 
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47

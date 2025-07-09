@@ -42,8 +42,12 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     userRole,
+<<<<<<< HEAD
     loading,
     emailVerified: user?.emailVerified || false
+=======
+    loading
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   };
 
   return (

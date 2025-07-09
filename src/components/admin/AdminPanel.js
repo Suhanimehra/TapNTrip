@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import AdminManagement from './Dashboard/AdminManagement.jsx';
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
 const AdminPanel = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('dashboard');
   const [statistics] = useState({
+<<<<<<< HEAD
     totalUsers: 0,
     activeProviders: 0,
     pendingApprovals: 0,
@@ -14,12 +18,46 @@ const AdminPanel = () => {
   });
 
   const [recentActivities] = useState([]);
+=======
+    totalUsers: 1250,
+    activeProviders: 85,
+    pendingApprovals: 12,
+    totalBookings: 450,
+  });
+
+  const [recentActivities] = useState([
+    {
+      id: 1,
+      type: 'provider_registration',
+      name: 'Adventure Tours Ltd.',
+      status: 'pending',
+      date: '2024-03-15',
+    },
+    {
+      id: 2,
+      type: 'user_report',
+      name: 'Customer Complaint #123',
+      status: 'urgent',
+      date: '2024-03-14',
+    },
+    {
+      id: 3,
+      type: 'booking_dispute',
+      name: 'Booking #789 Dispute',
+      status: 'resolved',
+      date: '2024-03-13',
+    },
+  ]);
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
   const navigationItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'users', label: 'Users', icon: '👥' },
     { id: 'providers', label: 'Service Providers', icon: '🏢' },
+<<<<<<< HEAD
     { id: 'admins', label: 'Admins', icon: '🛡️' },
+=======
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     { id: 'bookings', label: 'Bookings', icon: '📅' },
     { id: 'reports', label: 'Reports', icon: '📈' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
@@ -93,6 +131,7 @@ const AdminPanel = () => {
           </button>
         </header>
 
+<<<<<<< HEAD
         {/* Section Content */}
         {activeSection === 'dashboard' && (
           // Dashboard Content
@@ -236,6 +275,127 @@ const AdminPanel = () => {
         {activeSection === 'admins' && (
           <AdminManagement />
         )}
+=======
+        {/* Dashboard Content */}
+        <div className="space-y-6">
+          {/* Quick Stats */}
+          <section className="grid grid-cols-1 md:grid-cols-4 gap-6" aria-labelledby="stats-heading">
+            <h2 id="stats-heading" className="sr-only">Dashboard Statistics</h2>
+            
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
+              <h3 className="text-gray-400 mb-2">Total Users</h3>
+              <p className="text-3xl font-bold text-blue-500" aria-label={`Total users: ${statistics.totalUsers}`}>
+                {statistics.totalUsers.toLocaleString()}
+              </p>
+            </div>
+            
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
+              <h3 className="text-gray-400 mb-2">Active Providers</h3>
+              <p className="text-3xl font-bold text-green-500" aria-label={`Active providers: ${statistics.activeProviders}`}>
+                {statistics.activeProviders.toLocaleString()}
+              </p>
+            </div>
+            
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
+              <h3 className="text-gray-400 mb-2">Pending Approvals</h3>
+              <p className="text-3xl font-bold text-yellow-500" aria-label={`Pending approvals: ${statistics.pendingApprovals}`}>
+                {statistics.pendingApprovals.toLocaleString()}
+              </p>
+            </div>
+
+            <div className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-lg" role="status">
+              <h3 className="text-gray-400 mb-2">Total Bookings</h3>
+              <p className="text-3xl font-bold text-purple-500" aria-label={`Total bookings: ${statistics.totalBookings}`}>
+                {statistics.totalBookings.toLocaleString()}
+              </p>
+            </div>
+          </section>
+
+          {/* Recent Activities */}
+          <section className="bg-[#1f2937] rounded-lg p-6 transform transition-all duration-300 hover:shadow-lg" aria-labelledby="activities-heading">
+            <h2 id="activities-heading" className="text-xl font-semibold mb-6">Recent Activities</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full" role="table">
+                <thead>
+                  <tr className="text-gray-400 border-b border-gray-700">
+                    <th scope="col" className="text-left py-3 px-4">Activity</th>
+                    <th scope="col" className="text-left py-3 px-4">Type</th>
+                    <th scope="col" className="text-left py-3 px-4">Date</th>
+                    <th scope="col" className="text-left py-3 px-4">Status</th>
+                    <th scope="col" className="text-left py-3 px-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentActivities.map((activity) => (
+                    <tr key={activity.id} className="border-b border-gray-700 hover:bg-gray-800 transition-colors duration-200">
+                      <td className="py-4 px-4">{activity.name}</td>
+                      <td className="py-4 px-4">{activity.type}</td>
+                      <td className="py-4 px-4">{activity.date}</td>
+                      <td className="py-4 px-4">
+                        <span className={`px-3 py-1 rounded-full text-sm ${getStatusStyle(activity.status)}`}>
+                          {activity.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <button
+                          className="text-blue-400 hover:text-blue-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                          aria-label={`View details for ${activity.name}`}
+                        >
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {/* Quick Actions */}
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6" aria-labelledby="quick-actions-heading">
+            <h2 id="quick-actions-heading" className="sr-only">Quick Actions</h2>
+            
+            <button
+              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              aria-label="Review pending provider applications"
+            >
+              <div className="flex items-center space-x-4">
+                <span className="text-2xl transform transition-transform duration-300 hover:rotate-12" role="img" aria-hidden="true">📋</span>
+                <div>
+                  <h3 className="font-semibold">Review Applications</h3>
+                  <p className="text-sm text-gray-400">Review pending provider applications</p>
+                </div>
+              </div>
+            </button>
+
+            <button
+              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              aria-label="Generate monthly reports"
+            >
+              <div className="flex items-center space-x-4">
+                <span className="text-2xl transform transition-transform duration-300 hover:rotate-12" role="img" aria-hidden="true">📊</span>
+                <div>
+                  <h3 className="font-semibold">Generate Reports</h3>
+                  <p className="text-sm text-gray-400">Create monthly activity reports</p>
+                </div>
+              </div>
+            </button>
+
+            <button
+              className="bg-[#1f2937] p-6 rounded-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              aria-label="View system notifications"
+            >
+              <div className="flex items-center space-x-4">
+                <span className="text-2xl transform transition-transform duration-300 hover:rotate-12" role="img" aria-hidden="true">🔔</span>
+                <div>
+                  <h3 className="font-semibold">Notifications</h3>
+                  <p className="text-sm text-gray-400">View system notifications</p>
+                </div>
+              </div>
+            </button>
+          </section>
+        </div>
+>>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       </main>
     </div>
   );

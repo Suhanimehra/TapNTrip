@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-// This file is now obsolete due to Clerk integration. All authentication is handled by Clerk.
-
-// Restore previous authentication logic here if needed. Remove any Clerk-related code.
-=======
 // src/CustomerAuth.js
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -155,4 +150,3 @@ function CustomerAuth() {
 }
 
 export default CustomerAuth;
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47

@@ -1013,8 +1013,4 @@ export const adventureEvents = [
       "Camping"
     ]
   }
-<<<<<<< HEAD
-];
-=======
 ]; 
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47

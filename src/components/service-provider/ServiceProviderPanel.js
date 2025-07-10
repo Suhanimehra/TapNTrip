@@ -1,58 +1,36 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { auth } from '../../firebase-config';
 import { signOut } from 'firebase/auth';
-<<<<<<< HEAD
 import HotelDashboard from './Dashboard/HotelDashboard';
 import TransportDashboard from './Dashboard/TransportDashboard';
 import TravelGuideDashboard from './Dashboard/TravelGuideDashboard.jsx';
-=======
 import './Dashboard/Dashboard.css';
-import HotelDashboard from './Dashboard/HotelDashboard';
-import TransportDashboard from './Dashboard/TransportDashboard';
-import TravelGuideDashboard from './Dashboard/TravelGuideDashboard';
-import AddService from './Dashboard/AddService';
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 import HotelProfile from './Profile/HotelProfile';
 import TransportProfile from './Profile/TransportProfile';
 import GuideProfile from './Profile/GuideProfile';
 import Settings from './Settings/Settings';
-<<<<<<< HEAD
-=======
 import Reviews from './Dashboard/Reviews';
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 import HotelBookings from './Bookings/HotelBookings';
 import TransportBookings from './Bookings/TransportBookings';
 import GuideBookings from './Bookings/GuideBookings';
 import HotelServices from './Services/HotelServices';
 import TransportServices from './Services/TransportServices';
 import GuideServices from './Services/GuideServices';
-<<<<<<< HEAD
 import ProviderBookings from './ProviderBookings';
 import { db } from '../../firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../../contexts/AuthContext';
 import { HotelPackages } from './Services/HotelServices';
-=======
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
 
 const ServiceProviderPanel = () => {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme, zoomLevel, increaseZoom, decreaseZoom, resetZoom } = useTheme();
-<<<<<<< HEAD
   const { user } = useAuth();
   const [activeSection, setActiveSection] = useState('dashboard');
   const [providerType, setProviderType] = useState(null);
-=======
-  const [activeSection, setActiveSection] = useState('dashboard');
-  const [providerType, setProviderType] = useState('hotel');
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   const [earnings] = useState({
     total: 25000,
     pending: 5000,
@@ -82,11 +60,8 @@ const ServiceProviderPanel = () => {
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'bookings', label: 'Bookings', icon: '📅' },
     { id: 'services', label: 'My Services', icon: '🎫' },
-<<<<<<< HEAD
     // Add Packages for hotel providers only
     ...(providerType === 'hotel_provider' ? [{ id: 'packages', label: 'Packages', icon: '📦' }] : []),
-=======
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     { id: 'profile', label: 'Profile', icon: '👤' },
     { id: 'earnings', label: 'Earnings', icon: '💰' },
     { id: 'reviews', label: 'Reviews', icon: '⭐' },
@@ -149,7 +124,6 @@ const ServiceProviderPanel = () => {
     zoom: `${zoomLevel}%`,
   };
 
-<<<<<<< HEAD
   useEffect(() => {
     async function fetchProviderType() {
       if (user) {
@@ -212,52 +186,6 @@ const ServiceProviderPanel = () => {
             return <GuideProfile />;
           default:
             return <div className="text-center mt-10 text-red-600">Unknown provider type: {providerType}</div>;
-=======
-  // Render the correct dashboard/content component based on activeSection and providerType
-  const renderContent = () => {
-    switch (activeSection) {
-      case 'dashboard':
-        switch (providerType) {
-          case 'hotel':
-            return <HotelDashboard />;
-          case 'transport':
-            return <TransportDashboard />;
-          case 'guide':
-            return <TravelGuideDashboard />;
-          default:
-            return <HotelDashboard />;
-        }
-      case 'bookings':
-        return (
-          <div className="flex flex-col items-center justify-center h-full p-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Bookings Section</h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 text-center">
-              This section is currently blank and can be implemented here.
-            </p>
-          </div>
-        );
-      case 'services':
-        switch (providerType) {
-          case 'hotel':
-            return <HotelServices />;
-          case 'transport':
-            return <TransportServices />;
-          case 'guide':
-            return <GuideServices />;
-          default:
-            return <HotelServices />;
-        }
-      case 'profile':
-        switch (providerType) {
-          case 'hotel':
-            return <HotelProfile />;
-          case 'transport':
-            return <TransportProfile />;
-          case 'guide':
-            return <GuideProfile />;
-          default:
-            return <HotelProfile />;
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
         }
       case 'earnings':
         return (
@@ -280,57 +208,17 @@ const ServiceProviderPanel = () => {
       case 'settings':
         return <Settings providerType={providerType} />;
       default:
-<<<<<<< HEAD
         return <div className="text-center mt-10 text-red-600">Unknown section: {activeSection}</div>;
-=======
-        return <HotelDashboard />;
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     }
   };
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-[#1a1e2e]' : 'bg-white'} text-${isDarkMode ? 'white' : 'gray-800'}`}>
-<<<<<<< HEAD
-      {/* Sidebar Navigation */}
-      <aside className="fixed left-0 top-0 h-full w-64 bg-[#1a1e2e] border-r border-[#2d3348] flex flex-col z-40">
-        <div className="flex items-center justify-center h-20 border-b border-[#2d3348]">
-          <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-transparent bg-clip-text">TapNTrip</span>
-        </div>
-        <nav className="flex-1 py-8 px-4 space-y-2">
-          {navigationItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-lg font-semibold transition-colors ${
-                activeSection === item.id
-                  ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-lg'
-                  : 'text-gray-300 hover:bg-[#23263a] hover:text-white'
-              }`}
-            >
-              <span className="text-2xl">{item.icon}</span>
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
-      </aside>
-
-      {/* Main Content Area (with header) */}
-      <div className="ml-64 min-h-screen">
-=======
       {/* Header */}
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
       <motion.header 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-<<<<<<< HEAD
-          className={`bg-[#1a1e2e] border-b border-[#2d3348] sticky top-0 z-30 flex items-center justify-between px-8 h-20`}
-        >
-          <div /> {/* Empty for spacing, logo is in sidebar */}
-          <div className="flex items-center space-x-4">
-              {/* Zoom Controls */}
-            <div className="flex items-center space-x-2 bg-white/10 rounded-lg p-1">
-=======
         className={`${
           isDarkMode 
             ? 'bg-[#1a1e2e] border-[#2d3348]' 
@@ -351,16 +239,11 @@ const ServiceProviderPanel = () => {
             <div className="flex items-center space-x-4 ml-auto">
               {/* Zoom Controls */}
               <div className="flex items-center space-x-2 mr-4 bg-white/20 backdrop-blur-sm rounded-lg p-1">
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={decreaseZoom}
-<<<<<<< HEAD
-                className="p-2 rounded-lg hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-=======
                   className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                   title="Zoom Out"
                   aria-label="Decrease zoom level"
                 >
@@ -371,44 +254,12 @@ const ServiceProviderPanel = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={increaseZoom}
-<<<<<<< HEAD
-                className="p-2 rounded-lg hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-=======
                   className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-blue-50'} transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                   title="Zoom In"
                   aria-label="Increase zoom level"
                 >
                   <span className="text-xl">+</span>
                 </motion.button>
-<<<<<<< HEAD
-              </div>
-            {/* Profile and Logout */}
-            <div className="flex items-center space-x-2">
-              <span className="text-lg font-semibold text-gray-200">
-                {user?.displayName || user?.email}
-              </span>
-              <img
-                src={user?.photoURL || 'https://via.placeholder.com/30'}
-                alt="Profile"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Logout
-              </button>
-          </div>
-        </div>
-      </motion.header>
-        <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-          <AnimatePresence mode="wait">
-              {renderContent()}
-          </AnimatePresence>
-        </main>
-      </div>
-=======
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
@@ -558,7 +409,6 @@ const ServiceProviderPanel = () => {
       >
         ⬆️
       </motion.button>
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
     </div>
   );
 };

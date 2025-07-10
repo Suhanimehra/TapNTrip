@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaCalendarAlt, FaSearch, FaFilter, FaMapMarkedAlt } from 'react-icons/fa';
@@ -7,7 +6,6 @@ import { db } from '../../../firebase-config';
 import { collection, query, where, getDocs, orderBy, updateDoc, doc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
-// --- GuideBookings: Real data bookings for tour guides ---
 const GuideBookings = () => {
   const { user, loading: authLoading } = useAuth();
   const [bookings, setBookings] = useState([]);
@@ -16,7 +14,6 @@ const GuideBookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // --- Fetch Bookings ---
   useEffect(() => {
     const fetchBookings = async () => {
       if (!authLoading && user) {
@@ -42,7 +39,6 @@ const GuideBookings = () => {
     fetchBookings();
   }, [user, authLoading]);
 
-  // --- Tab & Search Filtering ---
   const now = new Date();
   const filteredBookings = bookings.filter(booking => {
     const bookingDate = new Date(booking.date);
@@ -56,7 +52,6 @@ const GuideBookings = () => {
     );
   });
 
-  // --- Status Update Handler ---
   const handleStatusChange = async (bookingId, newStatus) => {
     try {
       const bookingRef = doc(db, 'bookings', bookingId);
@@ -84,60 +79,6 @@ const GuideBookings = () => {
     );
   }
 
-=======
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaSearch, FaFilter, FaMapMarkedAlt } from 'react-icons/fa';
-
-const GuideBookings = () => {
-  const [activeTab, setActiveTab] = useState('upcoming');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const bookings = [
-    {
-      id: 1,
-      customerName: 'Sonia Mehra',
-      tourType: 'City Heritage Walk',
-      date: '2024-03-15',
-      duration: '3 hours',
-      meetingPoint: 'City Center Square',
-      status: 'confirmed',
-      amount: '₹2,000',
-      participants: 4,
-      specialRequests: 'English speaking guide'
-    },
-    {
-      id: 2,
-      customerName: 'Vikram Joshi',
-      tourType: 'Nature Trail',
-      date: '2024-03-16',
-      duration: '5 hours',
-      meetingPoint: 'Forest Park Entrance',
-      status: 'pending',
-      amount: '₹1,500',
-      participants: 2,
-      specialRequests: 'Photography tour'
-    },
-    {
-      id: 3,
-      customerName: 'Priya Sharma',
-      tourType: 'Cultural Experience',
-      date: '2024-03-17',
-      duration: '4 hours',
-      meetingPoint: 'Temple Complex',
-      status: 'confirmed',
-      amount: '₹3,000',
-      participants: 6,
-      specialRequests: 'Local food tasting included'
-    }
-  ];
-
-  const handleStatusChange = (bookingId, newStatus) => {
-    // Implement status change logic
-    console.log(`Changing booking ${bookingId} status to ${newStatus}`);
-  };
-
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
   return (
     <div className="space-y-6">
       {/* Header with Search and Filter */}
@@ -184,13 +125,9 @@ const GuideBookings = () => {
 
       {/* Bookings List */}
       <div className="space-y-4">
-<<<<<<< HEAD
         {filteredBookings.length === 0 ? (
           <div className="text-center text-gray-500 dark:text-gray-400 py-8">No bookings found.</div>
         ) : filteredBookings.map((booking) => (
-=======
-        {bookings.map((booking) => (
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
           <motion.div
             key={booking.id}
             initial={{ opacity: 0, y: 20 }}
@@ -201,7 +138,6 @@ const GuideBookings = () => {
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <FaMapMarkedAlt className="text-green-500" />
-<<<<<<< HEAD
                   <h3 className="text-lg font-semibold">{booking.customerName || 'N/A'}</h3>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
@@ -211,17 +147,6 @@ const GuideBookings = () => {
                 <p className="text-sm">Tour: {booking.tourType || 'N/A'}</p>
                 <p className="text-sm">Participants: {booking.participants || 'N/A'}</p>
                 <p className="text-sm">Meeting Point: {booking.meetingPoint || 'N/A'}</p>
-=======
-                  <h3 className="text-lg font-semibold">{booking.customerName}</h3>
-                </div>
-                <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-                  <FaCalendarAlt />
-                  <span>{booking.date} ({booking.duration})</span>
-                </div>
-                <p className="text-sm">Tour: {booking.tourType}</p>
-                <p className="text-sm">Participants: {booking.participants}</p>
-                <p className="text-sm">Meeting Point: {booking.meetingPoint}</p>
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                 {booking.specialRequests && (
                   <p className="text-sm text-blue-500">Special Request: {booking.specialRequests}</p>
                 )}
@@ -230,7 +155,6 @@ const GuideBookings = () => {
                 <span className={`px-3 py-1 rounded-full text-sm ${
                   booking.status === 'confirmed'
                     ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-<<<<<<< HEAD
                     : booking.status === 'cancelled'
                     ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                     : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
@@ -238,13 +162,6 @@ const GuideBookings = () => {
                   {booking.status || 'N/A'}
                 </span>
                 <p className="font-semibold">{booking.amount ? `₹${booking.amount}` : 'N/A'}</p>
-=======
-                    : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                }`}>
-                  {booking.status}
-                </span>
-                <p className="font-semibold">{booking.amount}</p>
->>>>>>> b15f446a651f1037f18e60021d38902348cc2a47
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleStatusChange(booking.id, 'confirmed')}

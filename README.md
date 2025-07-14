@@ -1,19 +1,18 @@
-## 🧳 TapNTrip — Your Personalized Travel Companion 🚀
-A full-stack travel booking platform designed for all age groups with a special focus on elderly users, ensuring accessibility, safety, and seamless booking experiences. Built with modern tech, role-based access, and a clean, responsive UI.
-
-## 🔥 Why TapNTrip?
-TapNTrip isn’t just another travel app — it's a mission-driven platform created to simplify travel planning with personalized features, rewards, real-time assistance, and robust admin control. Designed with scalability, accessibility, and real-world usability in mind.
-
-## 📌 About the Project
-
-**TapNTrip** is a full-featured, responsive travel booking platform tailored for **users of all ages**, with special care for **elderly travelers**. It integrates real-time travel booking, journaling, rewards, emergency features, and a powerful admin panel — all wrapped in a rich and accessible UI.
+# 🧳 TapNTrip — Your Personalized Travel Companion 🚀
+A full-stack travel booking platform for all age groups, with a special focus on elderly users. Accessibility, safety, and seamless booking experiences are at the core. Built with modern tech, role-based access, and a clean, responsive UI.
 
 ---
+
+## 🔥 Why TapNTrip?
+TapNTrip is a mission-driven platform to simplify travel planning with personalized features, rewards, real-time assistance, and robust admin control. Designed for scalability, accessibility, and real-world usability.
+
+---
+
 ## 🌟 Core Features
 
 ### 🧑‍💼 Multi-Role System
-- **Customer Panel** – Book Flights, Hotels, Trains, Buses, and Packages.
-- **Service Provider Panel** – Register services and manage listings.
+- **Customer Panel** – Book Flights, Hotels, Trains, Buses, and Packages (now includes packages from both hotel and package providers).
+- **Service Provider Panel** – Register/manage listings. Includes hotel, transport, guide, and **package provider** roles (with custom fields and dashboards).
 - **Admin Panel** – Full backend control over users, services, bookings, and content.
 
 ### ✨ Rewards System
@@ -32,14 +31,11 @@ TapNTrip isn’t just another travel app — it's a mission-driven platform crea
 ---
 
 ## 💻 Tech Stack
-
-Here’s a breakdown of the tools and libraries that power TapNTrip:
-
 | Category            | Technology / Library                     |
 |---------------------|-------------------------------------------|
 | **Frontend**        | React.js, TypeScript                      |
 | **Styling/UI**      | Tailwind CSS, ShadCN UI, Lucide-react, CSS |
-| **Routing**         | React Router (likely)                     |
+| **Routing**         | React Router                              |
 | **Auth & Backend**  | Firebase (Auth, Firestore, Storage)       |
 | **State Management**| React Context API                         |
 | **i18n**            | i18next (multi-language support)          |
@@ -51,7 +47,6 @@ Here’s a breakdown of the tools and libraries that power TapNTrip:
 ---
 
 ## 🛠️ Folder Structure
-
 ```bash
 TapNTrip/
 ├── public/               # Static files
@@ -69,79 +64,67 @@ TapNTrip/
 ├── firebase-config.js
 ├── README.md
 └── package.json
-````
+```
 
 ---
 
-## 📷 Screenshots
-
-> Add screenshots/GIFs here (UI from:
-
-* Rewards section
-* My Journal
-* Admin Dashboard
-* Service/User Management
-* Chatbot & SOS)
-
----
 
 ## 🚧 Current Progress
-
-* ✅ Fully working **Rewards System**
-* ✅ Beautiful dark-mode UI with **ShadCN components**
-* ✅ Role-based access with **Clerk auth** and secure routing
-* ✅ Admin dashboard (User, Service, Booking, and Payment Mgmt)
-* ✅ Accessibility and elderly-friendly optimizations
+- ✅ Multi-role support (customer, admin, hotel/transport/guide/package provider)
+- ✅ Modern, role-based dashboards and registration flows
+- ✅ Packages from all providers visible to customers
+- ✅ Clean, accessible, and responsive UI (dark mode supported)
+- ✅ Codebase cleaned of deprecated files and unused code
+- ✅ Accessibility and elderly-friendly optimizations
 
 ---
 
 ## 🧠 Future Scope
-
-* 🔄 Backend migration to **NestJS** with PostgreSQL + Prisma
-* 🤖 AI-based personalized recommendations
-* 🗣️ Full voice command integration
-* 🔒 Multi-factor authentication and OTP login
-* 🌐 PWA support for offline access
-* 📊 Analytics for Admin panel (Graphs, Usage, etc.)
+- 🔄 Backend migration to **NestJS** with PostgreSQL + Prisma
+- 🤖 AI-based personalized recommendations
+- 🗣️ Full voice command integration
+- 🔒 Multi-factor authentication and OTP login
+- 🌐 PWA support for offline access
+- 📊 Analytics for Admin panel (Graphs, Usage, etc.)
 
 ---
 
-## ✍️ Author
+## ✍️ Authors
+**Bharat Pratap Singh**  
+Final Year B.Tech IT-IoT, MITS Gwalior  
+**Suhani Mehra**  
+Final Year B.Tech CSE, MITS Gwalior
 
-**Bharat Pratap Singh** 
-> Final Year B.Tech IT-IoT, MITS Gwalior
-> Passionate about building real-world full-stack products, accessible design, and scalable systems.
+[GitHub](https://github.com/Bharatpratap392) | [LinkedIn](https://www.linkedin.com/in/bharatpratapsingh01/)  
+[GitHub](https://github.com/Suhanimehra) | [LinkedIn](https://www.linkedin.com/in/suhani-mehra-991618365/)
 
-**Suhani Mehra**
-> Final Year B.Tech CSE, MITS Gwalior
-> Passionate about building real-world full-stack products, accessible design, and scalable systems.
-
-📫 [GitHub](https://github.com/Bharatpratap392) | [LinkedIn](https://www.linkedin.com/in/bharatpratapsingh01/)
-📫 [GitHub](https://github.com/Suhanimehra))    | [LinkedIn](https://www.linkedin.com/in/suhani-mehra-991618365/)
 ---
 
 ## 📦 How to Run Locally
-
 ```bash
 # Clone the repo
-git clone https://github.com/Bharatpratap392/TapNTrip.git
+git clone https://github.com/Suhanimehra/TapNTrip.git
 cd TapNTrip
 
 # Install dependencies
-npm install
+npm install --legacy-peer-deps
 
 # Start development server
-npm run dev/npm start
+npm start # or npm start
 ```
+
+---
+
+## 🛠️ Troubleshooting & Known Issues
+- If you see ESLint or compilation errors, ensure all dependencies are installed and your Node version matches the `.nvmrc` or project requirements.
+- If you see "not a git repository" errors, run `git init` before pushing.
+- For merge conflicts, use `git fetch origin && git rebase origin/main` before pushing.
+- For Firebase setup, ensure your `firebase-config.js` is correctly configured.
+
+---
 
 ## 🤝 Contributions
+Contributions, suggestions, and collaboration ideas are welcome!
 
-While TapNTrip is currently being built Duo, contributions, suggestions, and collaboration ideas are welcome.
+---
 
-### ✅ Next Steps:
-- Save this as `README.md` and push to your repo.
-- Add a folder like `assets/screenshots/` to hold GIFs and images for visual showcase.
-- Let me know if you want **badges** (GitHub stars, last commit, etc.) or a **deployment setup** with Vercel or Netlify.
-
-Let me know when you're ready to push — or if you want the same quality README for your **Service Provider Panel**, **Elderly Travel Initiative**, or any other submodule.
-```

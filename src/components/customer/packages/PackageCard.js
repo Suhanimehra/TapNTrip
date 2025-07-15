@@ -41,11 +41,11 @@ const PackageCard = ({ packageData, onBookNow }) => {
           <h3 className="text-lg font-bold mb-1 line-clamp-1 text-left">{name}</h3>
           <p className={`text-sm mb-2 line-clamp-2 text-left ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{description}</p>
           <div className="flex flex-col gap-1 mb-2 text-left">
-            <span className="text-xs">Duration: <span className="font-medium">{duration}</span></span>
-            <span className="text-xs">Price: <span className="font-bold text-blue-500">₹{price}</span></span>
-            {inclusions && <span className="text-xs">Inclusions: <span className="font-medium">{inclusions}</span></span>}
-            {exclusions && <span className="text-xs">Exclusions: <span className="font-medium">{exclusions}</span></span>}
-          </div>
+          <span className="text-xs">Duration: <span className="font-medium">{duration}</span></span>
+          <span className="text-xs">Price: <span className="font-bold text-blue-500">₹{price}</span></span>
+          {inclusions && <span className="text-xs">Inclusions: <span className="font-medium">{inclusions}</span></span>}
+          {exclusions && <span className="text-xs">Exclusions: <span className="font-medium">{exclusions}</span></span>}
+        </div>
         </div>
         {/* Removed Book Now button */}
       </div>

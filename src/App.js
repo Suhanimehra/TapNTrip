@@ -22,6 +22,10 @@ import ForgotPassword from './components/common/ForgotPassword';
 import CustomerLogin from './CustomerAuth';
 import AdminLogin from './AdminAuth';
 import ServiceProviderLogin from './ServiceAuth';
+import JournalPage from './components/customer/JournalPage';
+import AssistantPage from './components/customer/AssistantPage';
+import FamilyLocationPage from './components/customer/FamilyLocationPage';
+import RemindersPage from './components/customer/RemindersPage';
 
 function AppRoutes() {
   const { user, emailVerified, userRole } = useAuth();

@@ -15,10 +15,10 @@ import ScrollToTop from '../common/ScrollToTop';
 import HealthAccessibility from './HealthAccessibility.tsx';
 import EmergencyButton from './EmergencyButton';
 import AccessibilityFilters from './AccessibilityFilters';
-// import MyJournal from './MyJournal';
-// import RealTimeAssistant from '../common/RealTimeAssistant';
-// import FamilyLocationSharing from './FamilyLocationSharing';
-// import Reminders from './Reminders';
+import JournalPage from './JournalPage';
+import AssistantPage from './AssistantPage';
+import FamilyLocationPage from './FamilyLocationPage';
+import RemindersPage from './RemindersPage';
 import EmergencyPage from './EmergencyPage';
 import { auth } from '../../firebase-config';
 import { signOut } from 'firebase/auth';
@@ -484,15 +484,13 @@ const CustomerDashboard = ({ initialSection = 'dashboard', initialService = 'fli
       case 'emergency':
         return <EmergencyPage />;
       case 'journal':
-        return null;
-      case 'accessibility':
-        return <AccessibilityFilters filters={accessibilityFilters} onChange={e => setAccessibilityFilters({ ...accessibilityFilters, [e.target.name]: e.target.checked })} />;
+        return <JournalPage />;
       case 'assistant':
-        return null;
+        return <AssistantPage />;
       case 'family-location':
-        return null;
+        return <FamilyLocationPage />;
       case 'reminders':
-        return null;
+        return <RemindersPage />;
       case 'tour-guides':
         return <TourGuidePage />;
       default:
@@ -956,15 +954,13 @@ const CustomerDashboard = ({ initialSection = 'dashboard', initialService = 'fli
       case 'emergency':
         return <EmergencyPage />;
       case 'journal':
-        return null;
-      case 'accessibility':
-        return <AccessibilityFilters filters={accessibilityFilters} onChange={e => setAccessibilityFilters({ ...accessibilityFilters, [e.target.name]: e.target.checked })} />;
+        return <JournalPage />;
       case 'assistant':
-        return null;
+        return <AssistantPage />;
       case 'family-location':
-        return null;
+        return <FamilyLocationPage />;
       case 'reminders':
-        return null;
+        return <RemindersPage />;
       case 'tour-guides':
         return <TourGuidePage />;
       default:
@@ -1164,7 +1160,7 @@ const CustomerDashboard = ({ initialSection = 'dashboard', initialService = 'fli
                     </motion.button>
                   ))}
             </nav>
-                    </div>
+            </div>
         </motion.aside>
 
               {/* Main Content Area */}

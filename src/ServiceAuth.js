@@ -46,16 +46,25 @@ export default function ServiceProviderLogin() {
       const result = await signInWithGoogle();
       const userId = result.user.uid;
       const userDoc = await getDoc(doc(db, 'users', userId));
-      if (userDoc.exists() && (
-        userDoc.data().role === 'hotel_provider' ||
-        userDoc.data().role === 'guide_provider' ||
-        userDoc.data().role === 'transport_provider' ||
-        userDoc.data().role === 'service_provider' ||
-        userDoc.data().role === 'package_provider'
-      )) {
-        navigate('/service-dashboard');
-          } else {
-        setError('Not a service provider account.');
+      if (userDoc.exists()) {
+        const role = userDoc.data().role;
+        if (
+          role === 'hotel_provider' ||
+          role === 'guide_provider' ||
+          role === 'transport_provider' ||
+          role === 'service_provider' ||
+          role === 'package_provider'
+        ) {
+          navigate('/service-dashboard');
+        } else if (role === 'customer') {
+          navigate('/customer-dashboard');
+        } else if (role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          setError('Unknown user role.');
+        }
+      } else {
+        setError('User not found.');
       }
     } catch (err) {
       setError('Google sign-in failed.');

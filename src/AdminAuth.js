@@ -41,10 +41,25 @@ export default function AdminLogin() {
       const result = await signInWithGoogle();
       const userId = result.user.uid;
       const userDoc = await getDoc(doc(db, 'users', userId));
-      if (userDoc.exists() && userDoc.data().role === 'admin') {
-        navigate('/admin-dashboard');
+      if (userDoc.exists()) {
+        const role = userDoc.data().role;
+        if (role === 'admin') {
+          navigate('/admin-dashboard');
+        } else if (role === 'customer') {
+          navigate('/customer-dashboard');
+        } else if (
+          role === 'hotel_provider' ||
+          role === 'guide_provider' ||
+          role === 'transport_provider' ||
+          role === 'service_provider' ||
+          role === 'package_provider'
+        ) {
+          navigate('/service-dashboard');
+        } else {
+          setError('Unknown user role.');
+        }
       } else {
-        setError('Not an admin account.');
+        setError('User not found.');
       }
     } catch (err) {
       setError('Google sign-in failed.');

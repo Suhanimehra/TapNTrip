@@ -102,9 +102,34 @@ export default function RegisterForm() {
         ...(role === 'transport_provider' && { licenseNumber, vehicleFleetSize }),
         ...(role === 'package_provider' && { licenseNumber, website, description }),
       });
+      // Also create service_providers doc if provider
+      if (role.endsWith('_provider') || role === 'service_provider') {
+        const providerType = role.replace('_provider', '').replace('service_provider', 'service');
+        // Set name and businessName for all provider types
+        const fullName = `${firstName} ${lastName}`.trim();
+        await setDoc(doc(db, 'service_providers', userCredential.user.uid), {
+          providerType,
+          type: providerType, // for dashboard
+          email,
+          status: 'pending',
+          firstName,
+          lastName,
+          name: companyName || fullName, // prefer companyName, fallback to full name
+          businessName: companyName || hotelRegistrationId || fullName, // prefer companyName, fallback to hotelRegistrationId or full name
+          mobile,
+          ...(role !== 'customer' && { companyName }),
+          ...(role === 'hotel_provider' && { hotelRegistrationId }),
+          ...(role === 'guide_provider' && { licenseNumber }),
+          ...(role === 'transport_provider' && { licenseNumber, vehicleFleetSize }),
+          ...(role === 'package_provider' && { licenseNumber, website, description }),
+        });
+      }
       await sendEmailVerification(userCredential.user);
       setVerificationSent(true);
       setLoading(false);
+      // Redirect after registration
+      const dash = roleToDashboard[role] || '/customer-dashboard';
+      navigate(dash, { replace: true });
     } catch (err) {
       setError(err.message);
       setLoading(false);
@@ -145,8 +170,36 @@ export default function RegisterForm() {
         ...(role === 'transport_provider' && { licenseNumber, vehicleFleetSize }),
         ...(role === 'package_provider' && { licenseNumber, website, description }),
       });
+      // Also create service_providers doc if provider
+      if (role.endsWith('_provider') || role === 'service_provider') {
+        const providerType = role.replace('_provider', '').replace('service_provider', 'service');
+        const fullName = result.user.displayName || `${firstName} ${lastName}`.trim();
+        await setDoc(doc(db, 'service_providers', result.user.uid), {
+          providerType,
+          type: providerType,
+          email: result.user.email,
+          status: 'pending',
+          firstName,
+          lastName,
+          name: companyName || fullName,
+          businessName: companyName || hotelRegistrationId || fullName,
+          mobile: '',
+          ...(role !== 'customer' && { companyName }),
+          ...(role === 'hotel_provider' && { hotelRegistrationId }),
+          ...(role === 'guide_provider' && { licenseNumber }),
+          ...(role === 'transport_provider' && { licenseNumber, vehicleFleetSize }),
+          ...(role === 'package_provider' && { licenseNumber, website, description }),
+        });
+      }
+      // Send email verification if possible
+      if (result.user && !result.user.emailVerified && result.user.sendEmailVerification) {
+        await result.user.sendEmailVerification();
+      }
       setVerificationSent(true);
       setLoading(false);
+      // Redirect after registration
+      const dash = roleToDashboard[role] || '/customer-dashboard';
+      navigate(dash, { replace: true });
     } catch (err) {
       setError(err.message);
       setLoading(false);
